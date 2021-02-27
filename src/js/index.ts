@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { component } from 'lucia';
+import { component, init } from 'lucia';
 import identity from 'netlify-identity-widget';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
@@ -104,6 +104,7 @@ function closeModal() {
 
 cancelPostBtn.addEventListener('click', () => closeModal());
 
+init();
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
