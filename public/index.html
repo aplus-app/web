@@ -224,120 +224,17 @@
             </div>
           </div>
         </div>
-        <div id="feed-container" class="align-top float-left w-3/5 h-16 space-y-12">
-          <div id="post-card" class="w-full flex p-8 rounded-md shadow-custom">
-            <div id="upvote-container" class="flex flex-col items-center pr-8">
-              <svg
-                width="24"
-                height="24"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="{2}"
-                  d="M5 10l7-7m0 0l7 7m-7-7v18"
-                />
-              </svg>
-              <span class="my-2 font-medium">24</span>
-              <svg
-                width="24"
-                height="24"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="{2}"
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
+        
+        <div id="feed-container" l-for="post in posts" class="align-top float-left h-16 space-y-12">
+          <div class="w-full flex p-8 shadow-custom rounded-md">
+            <div class="flex flex-col items-center pr-8">
+              put a heart here
+              <span class="my-2 font-medium" l-text="this.post.hearts || 0">24</span>
             </div>
             <div id="card-content">
-              <h1 class="m-0 font-bold text-2xl text-gray-900">
-                Lorem ipsum dolor sit amet consectetur?
-              </h1>
+              <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
               <div class="mt-2 text-gray-500 text-base leading-8">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ad cumque sequi
-                  molestiae hic saepe cupiditate, ab soluta blanditiis autem earum voluptas dolore
-                  aliquam enim accusantium illo expedita eius vel dolores! Saepe voluptatem autem
-                  laborum ut facilis quia unde dolor.
-                </p>
-              </div>
-              <div class="hr my-6"></div>
-              <div id="card-meta" class="mt-6 text-sm text-gray-400 flex justify-between">
-                <span class=""
-                  >Posted by <a href="#" class="text-purple-500">Firstname Lastname</a></span
-                >
-                <span class="">15hr ago</span>
-                <div class="flex items-center">
-                  <svg
-                    width="24"
-                    height="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="{2}"
-                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                    />
-                  </svg>
-                  <span class="inline-block ml-2">52</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="post-card" class="w-full flex p-8 shadow-custom rounded-md">
-            <div id="upvote-container" class="flex flex-col items-center pr-8">
-              <svg
-                width="24"
-                height="24"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="{2}"
-                  d="M5 10l7-7m0 0l7 7m-7-7v18"
-                />
-              </svg>
-              <span class="my-2 font-medium">24</span>
-              <svg
-                width="24"
-                height="24"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="{2}"
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-            </div>
-            <div id="card-content">
-              <h1 class="m-0 font-bold text-2xl text-gray-900">
-                Lorem ipsum dolor sit amet consectetur?
-              </h1>
-              <div class="mt-2 text-gray-500 text-base leading-8">
-                <p>
+                <p l-text="this.post.body">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ad cumque sequi
                   molestiae hic saepe cupiditate, ab soluta blanditiis autem earum voluptas dolore
                   aliquam enim accusantium illo expedita eius vel dolores! Saepe voluptatem autem
@@ -347,9 +244,9 @@
               <div class="hr my-6"></div>
               <div id="card-meta" class="text-sm text-gray-400 flex justify-between">
                 <span class=""
-                  >Posted by <a href="#" class="text-purple-500">Firstname Lastname</a></span
-                >
-                <span class="">15hr ago</span>
+                  >Posted by <a l-text="this.post.name" class="text-purple-500"></a
+                ></span>
+                <span l-text="this.post.date || new Date().toLocaleDateString()">15hr ago</span>
                 <div class="flex items-center">
                   <svg
                     width="24"
@@ -366,7 +263,7 @@
                       d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
                     />
                   </svg>
-                  <span class="inline-block ml-2">52</span>
+                  <span class="inline-block ml-2" l-text="this.post.comments?.length || 0"></span>
                 </div>
               </div>
             </div>
@@ -437,11 +334,7 @@
           </div>
         </div>
       </div>
-      <div l-for="post in posts">
-        <div l-text="JSON.stringify(this.post)"></div>
-      </div>
     </div>
-    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>
