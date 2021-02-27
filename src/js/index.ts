@@ -24,13 +24,15 @@ const app = component({
     }
   },
   createPost({ title, body }) {
-    const user = getUser();
+    const user = this.getUser();
     const payload = {
       name: user.user_metadata.full_name,
       id: user.id,
       title,
       body,
     };
+    closeModal();
+    this.posts.unshift(payload);
   },
   __init() {
     this.loggedIn = !!this.getUser();
@@ -94,11 +96,13 @@ createPostBtn.addEventListener('click', function () {
   }, 20);
 });
 
-cancelPostBtn?.addEventListener('click', function () {
+function closeModal() {
   document.querySelector('#post-modal-inner').classList.add('hidden-custom');
   document.querySelector('#post-modal-bg').classList.add('hidden-custom');
   setTimeout(() => postModal.classList.add('hidden'), 100);
-});
+}
+
+cancelPostBtn?.addEventListener('click', () => closeModal());
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
