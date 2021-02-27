@@ -4,12 +4,11 @@ import { component } from 'lucia';
 import identity from 'netlify-identity-widget';
 identity.init();
 
-identity.on('login', (_user) => {
-  // render shit
-});
-
 const app = component({
   loggedIn: false,
+  currentPostTitle: '',
+  currentPostBody: '',
+  posts: [],
   getUser(): boolean {
     return identity.currentUser();
   },
@@ -20,6 +19,15 @@ const app = component({
       identity.open();
     }
   },
+  createPost({ title, body }) {
+    const user = getUser();
+    const payload = {
+      name: user.user_metadata.full_name,
+      id: user.id,
+      title,
+      body,
+    };
+  },
   __init() {
     this.loggedIn = !!this.getUser();
   },
@@ -28,7 +36,8 @@ app.mount('#app');
 
 app.state.__init();
 
-identity.on('login', () => {
+identity.on('login', (user) => {
+  console.log(user);
   app.state.loggedIn = true;
 });
 identity.on('logout', () => {
