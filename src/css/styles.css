@@ -1,3 +1,6 @@
+#post-textbox {
+  min-height: 12rem;
+}
 
 #user-menu {
   opacity: 1;
@@ -12,11 +15,11 @@
 }
 
 #post-modal-bg {
-  opacity: .7;
-  transition: all .3s ease;
+  opacity: 0.7;
+  transition: all 0.3s ease;
 }
 
-#user-menu.hidden-custom { 
+#user-menu.hidden-custom {
   opacity: 0;
   transform: scale(0.95);
 }
