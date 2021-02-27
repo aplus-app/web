@@ -2,10 +2,20 @@ import { component } from 'lucia';
 import identity from 'netlify-identity-widget';
 identity.init();
 
-component({ count: 0 }).mount('#app');
-
 const user = identity.currentUser();
-console.log(user);
+
+if (!user) identity.open();
+
+identity.on('login', (_user) => {
+  // render shit
+});
+
+component({
+  logout() {
+    identity.logout();
+    identity.open();
+  },
+}).mount('#app');
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
