@@ -30,6 +30,7 @@ const app = component({
   },
   __init() {
     this.loggedIn = !!this.getUser();
+    document.querySelector('#user-btn').innerText = this.getUser()?.user_metadata?.full_name;
   },
 });
 app.mount('#app');
@@ -37,11 +38,45 @@ app.mount('#app');
 app.state.__init();
 
 identity.on('login', (user) => {
-  console.log(user);
   app.state.loggedIn = true;
+  document.querySelector('#user-btn').innerText = user?.user_metadata?.full_name;
 });
 identity.on('logout', () => {
   app.state.loggedIn = false;
+});
+
+// Mobile Menu
+
+let userBtn = document.querySelector('#user-btn');
+let userMenu = document.querySelector('#user-menu');
+let mobileMenu = document.querySelector('#mobile-menu');
+let mobileMenuBtn = document.querySelector('#mobile-menu-button');
+
+userBtn.addEventListener('click', function () {
+  if (userMenu.classList.contains('hidden')) {
+    userMenu.classList.remove('hidden');
+  } else {
+    setTimeout(() => userMenu.classList.add('hidden'), 100);
+  }
+  setTimeout(() => userMenu.classList.toggle('hidden-custom'), 20);
+});
+
+document.addEventListener(
+  'click',
+  function (e) {
+    if (e.target.closest('#user-menu') || e.target.closest('#user-btn')) return;
+    if (!userMenu.classList.contains('hidden-custom')) {
+      userMenu.classList.add('hidden-custom');
+      setTimeout(() => userMenu.classList.add('hidden'), 100);
+    }
+  },
+  false
+);
+
+mobileMenuBtn.addEventListener('click', function () {
+  mobileMenu.classList.toggle('hidden');
+  this.getElementsByTagName('svg')[0].classList.toggle('hidden');
+  this.getElementsByTagName('svg')[1].classList.toggle('hidden');
 });
 
 // identity.open(); // open the modal
