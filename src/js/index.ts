@@ -2,9 +2,13 @@
 
 import { component } from 'lucia';
 import identity from 'netlify-identity-widget';
+import marked from 'marked';
+import DOMPurify from 'dompurify';
 identity.init();
 
 const app = component({
+  DOMPurify,
+  marked,
   loggedIn: false,
   currentPostTitle: '',
   currentPostBody: '',
