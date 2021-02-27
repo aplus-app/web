@@ -11,7 +11,9 @@
   "dependencies": {
     "@types/netlify-identity-widget": "^1.9.1",
     "concurrently": "^6.0.0",
+    "dompurify": "^2.2.6",
     "lucia": "^0.4.7-0",
+    "marked": "^2.0.1",
     "netlify-identity-widget": "^1.9.1",
     "windicss": "^2.2.0"
   },

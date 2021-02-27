@@ -1,17 +1,12 @@
-const colors = require('windicss/colors');
-const typography = require('windicss/plugin/typography');
-
 module.exports = {
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: false, // or 'media' or 'class'
+  plugins: [
+    require('windicss/plugin/typography/index.js'),
+  ],
   theme: {
-    extend: {
-      colors: {
-        teal: colors.teal,
-      },
-    },
+    extend: {},
   },
   variants: {
     extend: {},
   },
-  plugins: [typography],
 };

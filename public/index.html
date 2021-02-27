@@ -142,7 +142,9 @@
           </div>
         </div>
       </nav>
-      <div class="m-auto text-xl"></div>
+      <div class="m-auto text-xl" l-html="DOMPurify.sanitize(marked('# Hello World'))">
+
+      </div>
     </div>
 
     <script src="./index.js"></script>
