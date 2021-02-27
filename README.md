@@ -14,10 +14,6 @@ It also uses [Lucia](https://lucia.js.org) for logic and [Tailwind](https://tail
 ## Usage
 
 ```bash
-# Build CSS & JavaScript for development
-# Note: CSS files are not watched.
-yarn dev
-
 # Build CSS & JavaScript for production
 yarn build
 ```

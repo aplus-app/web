@@ -5,7 +5,6 @@
   "author": "Aplus App",
   "license": "MIT",
   "scripts": {
-    "dev": "sh build.sh -w",
     "build": "sh build.sh",
     "cleanup": "prettier -w src"
   },
