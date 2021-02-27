@@ -33,6 +33,7 @@ const app = component({
     };
     closeModal();
     this.posts.unshift(payload);
+    
   },
   __init() {
     this.loggedIn = !!this.getUser();
@@ -55,8 +56,8 @@ identity.on('logout', () => {
 
 let userBtn = document.querySelector('#user-btn');
 let userMenu = document.querySelector('#user-menu');
-let mobileMenu = document.querySelector('#mobile-menu');
-let mobileMenuBtn = document.querySelector('#mobile-menu-button');
+// let mobileMenu = document.querySelector('#mobile-menu');
+// let mobileMenuBtn = document.querySelector('#mobile-menu-button');
 let createPostBtn = document.querySelector('#create-post');
 let cancelPostBtn = document.querySelector('#cancel-post');
 let postModal = document.querySelector('#post-modal');
@@ -82,11 +83,11 @@ document.addEventListener(
   false
 );
 
-mobileMenuBtn.addEventListener('click', function () {
-  mobileMenu.classList.toggle('hidden');
-  this.getElementsByTagName('svg')[0].classList.toggle('hidden');
-  this.getElementsByTagName('svg')[1].classList.toggle('hidden');
-});
+// mobileMenuBtn.addEventListener('click', function () {
+//   mobileMenu.classList.toggle('hidden');
+//   this.getElementsByTagName('svg')[0].classList.toggle('hidden');
+//   this.getElementsByTagName('svg')[1].classList.toggle('hidden');
+// });
 
 createPostBtn.addEventListener('click', function () {
   postModal.classList.remove('hidden');
@@ -102,7 +103,19 @@ function closeModal() {
   setTimeout(() => postModal.classList.add('hidden'), 100);
 }
 
+
+
 cancelPostBtn.addEventListener('click', () => closeModal());
+
+// document.querySelector('#unheart').forEach(addEventListener('click', function() {
+//   this.classList.toggle('hidden');
+//   this.nextSibling.classList.toggle('hidden');
+// }))
+
+// document.querySelector('#heart').forEach(addEventListener('click', function() {
+//   this.classList.toggle('hidden');
+//   this.previousSibling.classList.toggle('hidden');
+// }))
 
 init();
 
