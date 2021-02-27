@@ -1,12 +1,33 @@
+
 #user-menu {
   opacity: 1;
   transform: scale(1);
   transition: all 0.2s ease;
 }
 
-#user-menu.hidden-custom {
+#post-modal-inner {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.2s ease;
+}
+
+#post-modal-bg {
+  opacity: .7;
+  transition: all .3s ease;
+}
+
+#user-menu.hidden-custom { 
   opacity: 0;
   transform: scale(0.95);
+}
+
+#post-modal-inner.hidden-custom {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+#post-modal-bg.hidden-custom {
+  opacity: 0;
 }
 
 #create-post {

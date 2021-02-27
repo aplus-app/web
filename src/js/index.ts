@@ -53,6 +53,7 @@ let mobileMenu = document.querySelector('#mobile-menu');
 let mobileMenuBtn = document.querySelector('#mobile-menu-button');
 let createPostBtn = document.querySelector('#create-post');
 let cancelPostBtn = document.querySelector('#cancel-post');
+let postModal = document.querySelector('#post-modal');
 
 userBtn.addEventListener('click', function () {
   if (userMenu.classList.contains('hidden')) {
@@ -82,11 +83,17 @@ mobileMenuBtn.addEventListener('click', function () {
 });
 
 createPostBtn.addEventListener('click', function () {
-  document.querySelector('#post-modal').classList.remove('hidden');
+  postModal.classList.remove('hidden');
+  setTimeout(() => {
+    document.querySelector('#post-modal-inner').classList.remove('hidden-custom');
+    document.querySelector('#post-modal-bg').classList.remove('hidden-custom');
+  }, 20);
 });
 
 cancelPostBtn?.addEventListener('click', function () {
-  document.querySelector('#post-modal').classList.add('hidden');
+  document.querySelector('#post-modal-inner').classList.add('hidden-custom');
+  document.querySelector('#post-modal-bg').classList.add('hidden-custom');
+  setTimeout(() => postModal.classList.add('hidden'), 100);
 });
 
 // identity.open(); // open the modal
