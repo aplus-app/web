@@ -119,6 +119,11 @@
                 Create Post
               </button>
               <button
+                class="px-4 py-2 text-sm bg-gray-900 text-white rounded-md font-medium"
+              >
+                Login
+              </button>
+              <button
                 class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
               >
                 <svg
@@ -201,38 +206,5 @@
     </div>
 
     <script src="./index.js"></script>
-    <script>
-      let userBtn = document.querySelector('#user-btn');
-      let userMenu = document.querySelector('#user-menu');
-      let mobileMenu = document.querySelector('#mobile-menu');
-      let mobileMenuBtn = document.querySelector('#mobile-menu-button');
-
-      userBtn.addEventListener('click', function () {
-        if (userMenu.classList.contains('hidden')) {
-          userMenu.classList.remove('hidden');
-        } else {
-          setTimeout(() => userMenu.classList.add('hidden'), 100);
-        }
-        setTimeout(() => userMenu.classList.toggle('hidden-custom'), 20);
-      });
-
-      document.addEventListener(
-        'click',
-        function (e) {
-          if (e.target.closest('#user-menu') || e.target.closest('#user-btn')) return;
-          if (!userMenu.classList.contains('hidden-custom')) {
-            userMenu.classList.add('hidden-custom');
-            setTimeout(() => userMenu.classList.add('hidden'), 100);
-          }
-        },
-        false
-      );
-
-      mobileMenuBtn.addEventListener('click', function () {
-        mobileMenu.classList.toggle('hidden');
-        this.getElementsByTagName('svg')[0].classList.toggle('hidden');
-        this.getElementsByTagName('svg')[1].classList.toggle('hidden');
-      });
-    </script>
   </body>
 </html>
