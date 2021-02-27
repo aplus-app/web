@@ -336,7 +336,7 @@
               <button
                 @click="
                   if (currentPostTitle.length > 0 && currentPostBody.length > 0 && currentPostTitle.length < 128 && currentPostBody.length < 2048) {
-                    createPost({ title: DOMPurifuy.sanitize(currentPostTitle), body: DOMPurifuy.sanitize(currentPostBody) });
+                    createPost({ title: DOMPurify.sanitize(currentPostTitle), body: DOMPurify.sanitize(currentPostBody) });
                     currentPostTitle = '';
                     currentPostBody = '';
                   } else {
