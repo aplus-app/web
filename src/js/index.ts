@@ -55,6 +55,8 @@ let userBtn = document.querySelector('#user-btn');
 let userMenu = document.querySelector('#user-menu');
 let mobileMenu = document.querySelector('#mobile-menu');
 let mobileMenuBtn = document.querySelector('#mobile-menu-button');
+let createPostBtn = document.querySelector('#create-post');
+let cancelPostBtn = document.querySelector('#cancel-post');
 
 userBtn.addEventListener('click', function () {
   if (userMenu.classList.contains('hidden')) {
@@ -81,6 +83,14 @@ mobileMenuBtn.addEventListener('click', function () {
   mobileMenu.classList.toggle('hidden');
   this.getElementsByTagName('svg')[0].classList.toggle('hidden');
   this.getElementsByTagName('svg')[1].classList.toggle('hidden');
+});
+
+createPostBtn.addEventListener('click', function () {
+  document.querySelector('#post-modal').classList.remove('hidden');
+});
+
+cancelPostBtn?.addEventListener('click', function () {
+  document.querySelector('#post-modal').classList.add('hidden');
 });
 
 // identity.open(); // open the modal
