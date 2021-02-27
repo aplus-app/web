@@ -1,21 +1,39 @@
+// @ts-nocheck
+
 import { component } from 'lucia';
 import identity from 'netlify-identity-widget';
 identity.init();
-
-const user = identity.currentUser();
-
-if (!user) identity.open();
 
 identity.on('login', (_user) => {
   // render shit
 });
 
-component({
-  logout() {
-    identity.logout();
-    identity.open();
+const app = component({
+  loggedIn: false,
+  getUser(): boolean {
+    return identity.currentUser();
   },
-}).mount('#app');
+  identifyAction() {
+    if (this.loggedIn) {
+      identity.logout();
+    } else {
+      identity.open();
+    }
+  },
+  __init() {
+    this.loggedIn = !!this.getUser();
+  },
+});
+app.mount('#app');
+
+app.state.__init();
+
+identity.on('login', () => {
+  app.state.loggedIn = true;
+});
+identity.on('logout', () => {
+  app.state.loggedIn = false;
+});
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
