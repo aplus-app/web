@@ -231,7 +231,7 @@
           </div>
         </div>
 
-        <div id="feed-container" l-for="post in posts" class="float-left flex-1 h-16 space-y-12">
+        <div id="feed-container" l-for="post in posts" class="float-left h-16 space-y-12">
           <div class="w-full flex p-8 shadow-custom rounded-md">
             <div class="flex flex-col items-center pr-8">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -239,7 +239,7 @@
               </svg>
               <span class="my-2 font-medium" l-text="this.post.hearts || 0">24</span>
             </div>
-            <div id="card-content">
+            <div id="card-content" class=" flex-1 ">
               <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
               <div class="mt-2 text-gray-500 text-base leading-8">
                 <p l-html="DOMPurify.sanitize(marked(this.post.body))">
