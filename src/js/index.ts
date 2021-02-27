@@ -104,9 +104,6 @@ function closeModal() {
 
 cancelPostBtn.addEventListener('click', () => closeModal());
 
-document.querySelector('#post-modal-inner textarea').addEventListener('keyup', function() {
-  document.querySelectorAll('#md-preview h1').forEach(el => el.style.lineHeight = 1.4);
-})
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
