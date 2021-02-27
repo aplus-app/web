@@ -1,11 +1,48 @@
+// @ts-nocheck
+
 import { component } from 'lucia';
 import identity from 'netlify-identity-widget';
 identity.init();
 
-component({ count: 0 }).mount('#app');
+const app = component({
+  loggedIn: false,
+  currentPostTitle: '',
+  currentPostBody: '',
+  posts: [],
+  getUser(): boolean {
+    return identity.currentUser();
+  },
+  identifyAction() {
+    if (this.loggedIn) {
+      identity.logout();
+    } else {
+      identity.open();
+    }
+  },
+  createPost({ title, body }) {
+    const user = getUser();
+    const payload = {
+      name: user.user_metadata.full_name,
+      id: user.id,
+      title,
+      body,
+    };
+  },
+  __init() {
+    this.loggedIn = !!this.getUser();
+  },
+});
+app.mount('#app');
 
-const user = identity.currentUser();
-console.log(user);
+app.state.__init();
+
+identity.on('login', (user) => {
+  console.log(user);
+  app.state.loggedIn = true;
+});
+identity.on('logout', () => {
+  app.state.loggedIn = false;
+});
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
