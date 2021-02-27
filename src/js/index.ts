@@ -25,6 +25,7 @@ const app = component({
   },
   createPost({ title, body }) {
     const user = this.getUser();
+    if (!user) alert('You cannot use this method');
     const payload = {
       name: user.user_metadata.full_name,
       id: user.id,
@@ -50,6 +51,11 @@ identity.on('login', (user) => {
 });
 identity.on('logout', () => {
   app.state.loggedIn = false;
+  identity.open();
+});
+identity.on('close', () => {
+  if (app.state.loggedIn === true) return;
+  identity.open();
 });
 
 // Mobile Menu
@@ -118,6 +124,7 @@ cancelPostBtn.addEventListener('click', () => closeModal());
 // }))
 
 init();
+if (!app.state.loggedIn) identity.open();
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
