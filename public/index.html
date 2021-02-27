@@ -185,6 +185,7 @@
 
             <div class="flex flex-row-reverse mt-4 items-end">
               <button
+                @click="createPost({ title: currentPostTitle, body: currentPostBody })"
                 type="button"
                 class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ml-3 sm:w-auto sm:text-sm"
               >
@@ -200,6 +201,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div l-for="post in posts">
+        <div l-text="JSON.stringify(this.post)"></div>
       </div>
     </div>
 
