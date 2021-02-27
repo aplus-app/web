@@ -1,0 +1,18 @@
+#user-menu {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.2s ease;
+}
+
+#user-menu.hidden-custom {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+#create-post {
+  background-color: #8b5cf6 !important;
+}
+
+#create-post:hover {
+  background-color: #a78bfa !important;
+}

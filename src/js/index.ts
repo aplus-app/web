@@ -30,6 +30,7 @@ const app = component({
   },
   __init() {
     this.loggedIn = !!this.getUser();
+    document.querySelector('#user-btn').innerText = this.getUser()?.user_metadata?.full_name;
   },
 });
 app.mount('#app');
@@ -37,8 +38,8 @@ app.mount('#app');
 app.state.__init();
 
 identity.on('login', (user) => {
-  console.log(user);
   app.state.loggedIn = true;
+  document.querySelector('#user-btn').innerText = user?.user_metadata?.full_name;
 });
 identity.on('logout', () => {
   app.state.loggedIn = false;

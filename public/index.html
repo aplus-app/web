@@ -13,27 +13,6 @@
     <link rel="stylesheet" href="./styles.css" />
 
     <title>Aplus</title>
-
-    <style>
-      #user-menu {
-        opacity: 1;
-        transform: scale(1);
-        transition: all 0.2s ease;
-      }
-
-      #user-menu.hidden-custom {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-
-      #create-post {
-        background-color: #8b5cf6 !important;
-      }
-
-      #create-post:hover {
-        background-color: #a78bfa !important;
-      }
-    </style>
   </head>
   <body>
     <div id="app">
@@ -85,22 +64,17 @@
                   <a
                     href="#"
                     class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >Home</a
+                    >All</a
                   >
                   <a
                     href="#"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >Nav Item</a
+                    >Help</a
                   >
                   <a
                     href="#"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >Nav Item</a
-                  >
-                  <a
-                    href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >Nav Item</a
+                    >Sharing</a
                   >
                 </div>
               </div>
@@ -116,37 +90,19 @@
                 Create Post
               </button>
               <button
+                @click="identifyAction"
+                :hidden="loggedIn"
                 class="px-4 py-2 text-sm bg-gray-900 text-white rounded-md font-medium"
               >
                 Login
               </button>
-              <button
-                class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-              >
-                <svg
-                  class="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                  />
-                </svg>
-              </button>
 
-              <div class="ml-3 relative">
+              <div class="ml-3 relative" :hidden="!loggedIn">
                 <div>
                   <button
-                    class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    class="bg-gray-800 flex text-white text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                     id="user-btn"
-                  >
-                    <img class="h-8 w-8 rounded-full" src="" alt="pfp" />
-                  </button>
+                  ></button>
                 </div>
                 <div
                   class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 hidden hidden-custom"
@@ -155,10 +111,9 @@
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >Your Profile</a
                   >
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >Settings</a
-                  >
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  <a
+                    @click="identifyAction"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >Sign out</a
                   >
                 </div>
@@ -172,29 +127,22 @@
             <a
               href="#"
               class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-              >Home</a
+              >All</a
             >
             <a
               href="#"
               class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >Nav Item</a
+              >Help</a
             >
             <a
               href="#"
               class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >Nav Item</a
-            >
-            <a
-              href="#"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >Nav Item</a
+              >Sharing</a
             >
           </div>
         </div>
       </nav>
-      <div class="m-auto text-xl">
-        <button @click="identifyAction" l-text="loggedIn ? 'Logout' : 'Join'">Join</button>
-      </div>
+      <div class="m-auto text-xl"></div>
     </div>
 
     <script src="./index.js"></script>
