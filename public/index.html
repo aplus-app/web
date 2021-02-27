@@ -62,18 +62,14 @@
               </div>
               <div class="hidden sm:block sm:ml-6">
                 <div class="flex space-x-4">
-                  <a
-                    href="#"
-                    class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                  <a class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
                     >Home</a
                   >
                   <a
-                    href="#"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >Help</a
                   >
                   <a
-                    href="#"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >Sharing</a
                   >
@@ -110,7 +106,7 @@
                   class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-gray-900 ring-opacity-5 hidden hidden-custom"
                   id="user-menu"
                 >
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >Your Profile</a
                   >
                   <a
@@ -126,18 +122,14 @@
 
         <div class="sm:hidden hidden" id="mobile-menu">
           <div class="px-2 pt-2 pb-3 space-y-1">
-            <a
-              href="#"
-              class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+            <a class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
               >Home</a
             >
             <a
-              href="#"
               class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >Help</a
             >
             <a
-              href="#"
               class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >Sharing</a
             >
@@ -231,11 +223,28 @@
           </div>
         </div>
 
-        <div id="feed-container" l-for="post in posts" class="float-left h-16 space-y-12">
+        <div
+          id="feed-container"
+          l-for="post in posts"
+          class="align-top float-left h-16 space-y-12"
+          l-mask
+        >
           <div class="w-full flex p-8 shadow-custom rounded-md">
             <div class="flex flex-col items-center pr-8">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="{2}"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
               </svg>
               <span class="my-2 font-medium" l-text="this.post.hearts || 0">24</span>
             </div>
@@ -325,7 +334,15 @@
 
             <div class="flex flex-row-reverse mt-4 items-end">
               <button
-                @click="createPost({ title: currentPostTitle, body: currentPostBody })"
+                @click="
+                  if (currentPostTitle.length > 0 && currentPostBody.length > 0 && currentPostTitle.length < 128 && currentPostBody.length < 2048) {
+                    createPost({ title: DOMPurify.sanitize(currentPostTitle), body: DOMPurify.sanitize(currentPostBody) });
+                    currentPostTitle = '';
+                    currentPostBody = '';
+                  } else {
+                    alert('Invalid content in your title or post');
+                  }
+                "
                 type="button"
                 class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ml-3 sm:w-auto sm:text-sm"
               >

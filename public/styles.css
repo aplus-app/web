@@ -1,3 +1,7 @@
+[l-mask] {
+  visibility: hidden !important;
+}
+
 .clearfix::after {
   content: '';
   display: table;
