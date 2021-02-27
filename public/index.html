@@ -169,7 +169,9 @@
                 </svg>
                 <span>Home</span>
               </div>
-              <div class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer">
+              <div
+                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
+              >
                 <svg
                   class="mr-1"
                   width="20"
@@ -189,7 +191,9 @@
             </div>
             <div id="subject-menu">
               <div class="uppercase py-3 tracking-wider">Subjects</div>
-              <div class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer">
+              <div
+                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
+              >
                 <svg
                   class="mr-1"
                   width="20"
@@ -204,7 +208,9 @@
                 </svg>
                 <span>Math</span>
               </div>
-              <div class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer">
+              <div
+                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
+              >
                 <svg
                   class="mr-1"
                   width="20"
@@ -234,7 +240,7 @@
             <div id="card-content">
               <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
               <div class="mt-2 text-gray-500 text-base leading-8">
-                <p l-text="this.post.body">
+                <p l-html="DOMPurify.sanitize(marked(this.post.body))">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ad cumque sequi
                   molestiae hic saepe cupiditate, ab soluta blanditiis autem earum voluptas dolore
                   aliquam enim accusantium illo expedita eius vel dolores! Saepe voluptatem autem
@@ -246,7 +252,7 @@
                 <span class=""
                   >Posted by <a l-text="this.post.name" class="text-purple-500"></a
                 ></span>
-                <span l-text="this.post.date || new Date().toLocaleDateString()">15hr ago</span>
+                <span l-text="this.post.date || new Date().toLocaleDateString()"></span>
                 <div class="flex items-center">
                   <svg
                     width="24"
