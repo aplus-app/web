@@ -12,6 +12,8 @@ const app = component({
   loggedIn: false,
   currentPostTitle: '',
   currentPostBody: '',
+  latestPosts: [],
+  trendingPosts: [],
   posts: [
     {
       name: 'Gamer Man',
@@ -61,6 +63,21 @@ const app = component({
 });
 app.mount('#app');
 
+try {
+  app.state.latestPosts = [...app.state.posts];
+
+  app.state.trendingPosts = [...app.state.posts];
+  app.state.trendingPosts.sort((post1, post2) => post2.hearts - post1.hearts);
+  app.state.topUsers = app.state.posts.slice(0, 3);
+
+  for (const post of [...app.state.trendingPosts]) {
+    if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
+  }
+
+  app.state.posts = app.state.trendingPosts;
+} catch (err) {
+  console.error(err);
+}
 app.state.__init();
 
 identity.on('close', () => {
@@ -147,12 +164,7 @@ cancelPostBtn.addEventListener('click', () => closeModal());
 init();
 
 try {
-  app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
-  app.state.topUsers = app.state.posts.slice(0, 3);
-
-  for (const post of [...app.state.posts]) {
-    if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
-  }
+  trending();
 } catch (err) {
   console.error(err);
 }
