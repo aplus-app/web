@@ -254,8 +254,8 @@
           </div>
         </div>
 
-        <div id="feed-container" class="align-top float-left h-16 space-y-12" l-mask>
-          <div l-for="post in posts">
+        <div id="feed-container" class="align-top float-left h-16 space-y-12">
+          <div l-for="post in posts" l-mask>
             <div class="w-full flex p-8 shadow-custom rounded-md">
               <div
                 class="flex flex-col items-center pr-8"
@@ -263,10 +263,12 @@
                 this.post.heartedByUser = !this.post.heartedByUser;
                 if (this.post.heartedByUser) {
                   this.post.hearts++;
+                  fetch(`${API_URL}/add-heart`, { method: 'POST', body: { id: this.post.id } });
                   localStorage[this.post.id] = true;
                 } else {
                   this.post.hearts--;
-                  delete localStorage[this.post.id]
+                  fetch(`${API_URL}/remove-heart`, { method: 'POST', body: { id: this.post.id } });
+                  delete localStorage[this.post.id];
                 }
               "
               >
