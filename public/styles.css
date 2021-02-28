@@ -1,3 +1,9 @@
+@import url('http://fonts.cdnfonts.com/css/graphik');
+
+html, body {
+  font-family: 'Graphik', sans-serif;
+}
+
 [l-mask] {
   visibility: hidden !important;
 }
@@ -19,16 +25,16 @@
 }
 
 .shadow-custom {
-  -webkit-box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.05);
-  box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
 }
 
 .shadow-custom:hover {
-  -webkit-box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.075);
-  -moz-box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.075);
-  box-shadow: 0px 20px 30px -5px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.015);
+  -moz-box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.015);
+  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.15);
 }
 
 #browse-container,
