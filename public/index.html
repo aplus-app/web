@@ -277,11 +277,12 @@
                 this.post.heartedByUser = !this.post.heartedByUser;
                 if (this.post.heartedByUser) {
                   this.post.hearts++;
-                  localStorage[this.post.id] = true;
+                  localStorage[`post${this.post.id}`] = true;
+                  $render();
                   fetch(`${API_URL}/add-heart`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: this.post.id }),
+                    body: JSON.stringify({ id: +this.post.id }),
                     redirect: 'follow',
                     referrerPolicy: 'no-referrer',
                     // mode: 'cors'
@@ -289,11 +290,12 @@
                   saveToLocal();
                 } else {
                   this.post.hearts--;
-                  delete localStorage[this.post.id];
+                  delete localStorage[`post${this.post.id}`];
+                  $render();
                   fetch(`${API_URL}/remove-heart`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: this.post.id }),
+                    body: JSON.stringify({ id: +this.post.id }),
                     redirect: 'follow',
                     referrerPolicy: 'no-referrer',
                     // mode: 'cors'
@@ -302,7 +304,7 @@
                 }
               "
               >
-                <div :hidden="this.post.heartedByUser">
+                <div :hidden="localStorage[`post${this.post.id}`]">
                   <svg
                     id="unheart"
                     xmlns="http://www.w3.org/2000/svg"
@@ -320,7 +322,7 @@
                     />
                   </svg>
                 </div>
-                <div :hidden="!this.post.heartedByUser">
+                <div :hidden="!localStorage[`post${this.post.id}`]">
                   <svg
                     :hidden="!this.post.heartedByUser"
                     id="heart"
@@ -641,6 +643,28 @@
           >
             <div>
               <h1 class="text-3xl font-bold" l-text="posts[i].title">Post title</h1>
+              <button
+                :style="{ display: getUser().user_metadata.full_name !== posts[i].user_name ? 'none' : 'block' }"
+                @click="
+                  fetch(`${API_URL}/delete-comment`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    body: JSON.stringify({
+                      id: +this.posts[this.i].id,
+                    }),
+                  }).then((res) => res.text()).then(() => {
+                    location.reload(false);
+                  });
+                "
+                type="button"
+                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ml-3 sm:w-auto sm:text-sm"
+              >
+                Delete
+              </button>
               <div class="my-3">
                 <span class="text-gray-500"
                   >Posted by
@@ -672,7 +696,9 @@
               <div id="make-comment">
                 <span class="text-gray-400 text-sm"
                   >Comment as
-                  <span class="text-purple-500" l-text="getUser().user_metadata.full_name">yourUsername</span></span
+                  <span class="text-purple-500" l-text="getUser().user_metadata.full_name"
+                    >yourUsername</span
+                  ></span
                 >
                 <textarea
                   maxlength="2048"
@@ -694,13 +720,36 @@
               <!-- <div class="hr mt-6"></div> -->
 
               <!-- <div class="uppercase py-3 tracking-wider text-gray-900 text-sm">Discussion</div> -->
-              <div l-for="comment of comments">
+              <div l-for="(comment, i) of comments">
                 <div>
                   <div id="comment-block" class="w-full text-sm py-6">
                     <span class="text-gray-500"
                       ><span class="text-purple-500" l-text="this.comment.user_name">Username</span>
                       <span l-text="new Date().toLocaleDateString()"></span
                     ></span>
+
+                    <button
+                      :style="{ display: getUser().user_metadata.full_name !== this.comment.user_name ? 'none' : 'block' }"
+                      @click="
+                        fetch(`${API_URL}/delete-comment`, {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          redirect: 'follow',
+                          referrerPolicy: 'no-referrer',
+                          body: JSON.stringify({
+                            id: +this.comment.id,
+                          }),
+                        }).then((res) => res.text()).then(() => {
+                          location.reload(false);
+                        })
+                      "
+                      type="button"
+                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ml-3 sm:w-auto sm:text-sm"
+                    >
+                      Delete
+                    </button>
                     <div class="mt-2">
                       <p l-html="DOMPurify.sanitize(marked(this.comment.body || ''))">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus a
