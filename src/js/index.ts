@@ -35,7 +35,47 @@ fetch(`${API_URL}/get/posts`)
           id: 1,
           heartedByUser: localStorage.example1,
           category: 'foreign language',
-          comments: []
+          comments: [
+            {
+              id: 1,
+              post_id: '1',
+              user_name: 'señorita Juanita',
+              body: '¡Gracias chico!',
+            },
+            { id: 2, post_id: '1', user_name: 'Vera Wyman', body: '¡Feliz cumpleaños señorita!' },
+            {
+              id: 3,
+              post_id: '1',
+              user_name: 'Gretchen Klocko',
+              body: '¡Feliz cumpleaños señorita!',
+            },
+            { id: 4, post_id: '1', user_name: 'Elbert Mills', body: '¡Feliz cumpleaños señorita!' },
+            {
+              id: 5,
+              post_id: '1',
+              user_name: 'Jeremiah Okuneva',
+              body: '¡Feliz cumpleaños señorita!',
+            },
+            {
+              id: 6,
+              post_id: '1',
+              user_name: 'Jennie Jenkins',
+              body: '¡Feliz cumpleaños señorita!',
+            },
+            {
+              id: 7,
+              post_id: '1',
+              user_name: 'Bryant Daniel',
+              body: '¡Feliz cumpleaños señorita!',
+            },
+            {
+              id: 8,
+              post_id: '1',
+              user_name: 'Bradford Spinka',
+              body: '¡Feliz cumpleaños señorita!',
+            },
+            { id: 9, post_id: '1', user_name: 'Lila Jast', body: '¡Feliz cumpleaños señorita!' },
+          ],
         },
         {
           user_name: 'Aiden Bai',
@@ -48,7 +88,7 @@ fetch(`${API_URL}/get/posts`)
           id: 2,
           heartedByUser: localStorage.example1,
           category: 'math',
-          comments: []
+          comments: [],
         },
         {
           user_name: 'Melinda Chang',
@@ -63,7 +103,7 @@ fetch(`${API_URL}/get/posts`)
           id: 3,
           heartedByUser: localStorage.example2,
           category: 'history',
-          comments: []
+          comments: [],
         },
         {
           user_name: 'Will Lane',
@@ -74,7 +114,7 @@ fetch(`${API_URL}/get/posts`)
           id: 4,
           heartedByUser: localStorage.example3,
           category: 'science',
-          comments: []
+          comments: [],
         },
         {
           user_name: 'Tejas Agarwal',
@@ -85,7 +125,7 @@ fetch(`${API_URL}/get/posts`)
           id: 5,
           heartedByUser: localStorage.example4,
           category: 'english',
-          comments: []
+          comments: [],
         },
       ],
       userHearts: 0,
