@@ -18,65 +18,68 @@ const app = component({
   originalPosts: [],
   latestPosts: [],
   trendingPosts: [],
-  posts: [
-    {
-      user_name: 'Aiden Bai',
-      user_id: 'aidenbai',
-      title: 'Happy Birthday to señorita Juanita',
-      body: `Let's all wish señorita Juanita a happy birthday!! She's an phenomenal teacher. ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4d78da3e-748d-414a-9a12-54bee2e8d5a1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210228%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210228T041020Z&X-Amz-Expires=86400&X-Amz-Signature=c911bbc7ef25b508d1126c9a9d651f3517f2484423b534a4939b0cc1223eb604&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)`,
-      hearts: 20,
-      id: 'example1',
-      heartedByUser: localStorage.example1,
-      category: 'foreign language',
-    },
-    {
-      user_name: 'Aiden Bai',
-      user_id: 'aidenbai',
-      title: '5.3 #16 for Edwards',
-      body: `I tried using addition, but there's this weird "-" sign. Anybody know what this means? Here is a picture of the work I have now:
+  posts: JSON.parse(
+    localStorage.local ||
+      JSON.stringify([
+        {
+          user_name: 'Aiden Bai',
+          user_id: 'aidenbai',
+          title: 'Happy Birthday to señorita Juanita',
+          body: `Let's all wish señorita Juanita a happy birthday!! She's an phenomenal teacher. ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4d78da3e-748d-414a-9a12-54bee2e8d5a1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210228%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210228T041020Z&X-Amz-Expires=86400&X-Amz-Signature=c911bbc7ef25b508d1126c9a9d651f3517f2484423b534a4939b0cc1223eb604&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)`,
+          hearts: 20,
+          id: 'example1',
+          heartedByUser: localStorage.example1,
+          category: 'foreign language',
+        },
+        {
+          user_name: 'Aiden Bai',
+          user_id: 'aidenbai',
+          title: '5.3 #16 for Edwards',
+          body: `I tried using addition, but there's this weird "-" sign. Anybody know what this means? Here is a picture of the work I have now:
         ![](https://i.ytimg.com/vi/jGMRLLySc4w/maxresdefault.jpg)
       `,
-      hearts: 3,
-      id: 'example1',
-      heartedByUser: localStorage.example1,
-      category: 'math',
-    },
-    {
-      user_name: 'Melinda Chang',
-      user_id: 'melindachang',
-      title: 'Tips for Abraham',
-      body: `Edwards is a great teacher, but sometimes her grading can be really hard. I strongly recommend following these three tips:
+          hearts: 3,
+          id: 'example1',
+          heartedByUser: localStorage.example1,
+          category: 'math',
+        },
+        {
+          user_name: 'Melinda Chang',
+          user_id: 'melindachang',
+          title: 'Tips for Abraham',
+          body: `Edwards is a great teacher, but sometimes her grading can be really hard. I strongly recommend following these three tips:
 
         - Be nice to her
         - Show all your work
         - Talk to her if you need help
       `,
-      hearts: 100,
-      id: 'example2',
-      heartedByUser: localStorage.example2,
-      category: 'history',
-    },
-    {
-      user_name: 'Will Lane',
-      user_id: 'willlane',
-      title: "Newton's second law",
-      body: `Yesterday I discovered that newton's second law is net Force = mass * acceleration! Ain't that neat.`,
-      hearts: 5,
-      id: 'example3',
-      heartedByUser: localStorage.example3,
-      category: 'science',
-    },
-    {
-      user_name: 'Tejas Agarwal',
-      user_id: 'tejasagarwal',
-      title: 'Survey form',
-      body: `Hi! I'm part of the DECA club, wondering if anybody would be willing to fill it out if you are in Freshman English: [https://example.com](https://example.com).`,
-      hearts: 10,
-      id: 'example4',
-      heartedByUser: localStorage.example4,
-      category: 'english',
-    },
-  ],
+          hearts: 100,
+          id: 'example2',
+          heartedByUser: localStorage.example2,
+          category: 'history',
+        },
+        {
+          user_name: 'Will Lane',
+          user_id: 'willlane',
+          title: "Newton's second law",
+          body: `Yesterday I discovered that newton's second law is net Force = mass * acceleration! Ain't that neat.`,
+          hearts: 5,
+          id: 'example3',
+          heartedByUser: localStorage.example3,
+          category: 'science',
+        },
+        {
+          user_name: 'Tejas Agarwal',
+          user_id: 'tejasagarwal',
+          title: 'Survey form',
+          body: `Hi! I'm part of the DECA club, wondering if anybody would be willing to fill it out if you are in Freshman English: [https://example.com](https://example.com).`,
+          hearts: 10,
+          id: 'example4',
+          heartedByUser: localStorage.example4,
+          category: 'english',
+        },
+      ])
+  ),
   userHearts: 0,
   topUsers: [],
   getUser(): boolean {
@@ -108,6 +111,7 @@ const app = component({
     this.latestPosts = [payload, ...this.latestPosts];
     this.trendingPosts = [payload, ...this.trendingPosts];
 
+    this.saveToLocal();
     fetch(`${API_URL}/create-post`, {
       method: 'POST',
       headers: {
@@ -139,6 +143,9 @@ const app = component({
     document.querySelector('#report-modal-inner').classList.add('hidden-custom');
     document.querySelector('#report-modal-bg').classList.add('hidden-custom');
     setTimeout(() => document.querySelector('#report-modal').classList.add('hidden'), 100);
+  },
+  saveToLocal() {
+    localStorage.local = JSON.stringify(this.originalPosts);
   },
 });
 app.mount('#app');
