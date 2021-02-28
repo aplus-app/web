@@ -346,8 +346,8 @@
                 <div class="my-4">
                   <span
                     class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white self-start"
-                    l-text="this.post.category"></span
-                  >
+                    l-text="this.post.category"
+                  ></span>
                 </div>
                 <div class="text-gray-500 text-base leading-8">
                   <p l-html="DOMPurify.sanitize(marked(this.post.body))">
@@ -566,6 +566,11 @@
                 </div>
                 <div class="mt-2" :hidden="!currentPostBody">
                   <h3 class="font-bold text-md mb-2">Markdown Preview</h3>
+                  <p>
+                    <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+                      >Markdown Cheatsheet</a
+                    >
+                  </p>
                   <div
                     id="md-preview"
                     class="text-sm text-gray-900 bg-gray-200 py-4 px-6 rounded-md w-full max-h-40 overflow-y-auto"
@@ -689,11 +694,11 @@
               </button>
 
               <!-- <h1 class="text-3xl font-bold">Post title</h1> -->
-               <div class="my-4">
+              <div class="my-4">
                 <span
-                  class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white" l-text="posts[i].category"
-                  ></span
-                >
+                  class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white"
+                  l-text="posts[i].category"
+                ></span>
               </div>
 
               <div class="my-3">

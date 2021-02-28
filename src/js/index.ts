@@ -94,11 +94,7 @@ fetch(`${API_URL}/get/posts`)
           user_name: 'Melinda Chang',
           user_id: 'melindachang',
           title: 'Tips for Abraham',
-          body: `Edwards is a great teacher, but sometimes her grading can be really hard. I strongly recommend following these three tips:
-            - Be nice to her
-            - Show all your work
-            - Talk to her if you need help
-          `,
+          body: `Edwards is a great teacher, but sometimes her grading can be really hard. I strongly recommend following these three tips:\n- Be nice to her\n- Show all your work\n- Talk to her if you need help\n`,
           hearts: 100,
           id: 3,
           heartedByUser: localStorage.example2,
@@ -177,10 +173,6 @@ fetch(`${API_URL}/get/posts`)
           body: body,
         };
         closeModal();
-        this.originalPosts = [payload, ...this.originalPosts];
-        this.posts = [payload, ...this.posts];
-        this.latestPosts = [payload, ...this.latestPosts];
-        this.trendingPosts = [payload, ...this.trendingPosts];
 
         fetch(`${API_URL}/create-post`, {
           method: 'POST',
@@ -191,6 +183,14 @@ fetch(`${API_URL}/get/posts`)
           referrerPolicy: 'no-referrer',
           body: JSON.stringify(payload),
         });
+
+        payload.hearts = 0;
+
+        this.originalPosts = [payload, ...this.originalPosts];
+        this.posts = [payload, ...this.posts];
+        this.latestPosts = [payload, ...this.latestPosts];
+        this.trendingPosts = [payload, ...this.trendingPosts];
+
       },
       __init() {
         this.loggedIn = !!this.getUser();
