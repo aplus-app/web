@@ -267,7 +267,10 @@
 
         <div id="feed-container" class="align-top float-left h-16 space-y-12">
           <div l-for="post in posts" class="space-y-12" l-mask>
-            <div class="w-full flex p-8 shadow-custom rounded-md">
+            <div
+              class="w-full flex p-8 shadow-custom rounded-md cursor-pointer"
+              @click.self="openCard()"
+            >
               <div
                 class="flex flex-col items-center pr-8"
                 @click="
@@ -605,6 +608,95 @@
               >
                 Cancel
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="card-modal" class="hidden flex absolute inset-0 z-10">
+        <div
+          id="card-modal-bg"
+          class="hidden-custom fixed inset-0 bg-gray-500 cursor-pointer"
+          @click="closeCard()"
+        ></div>
+        <div class="flex flex-col w-full items-center">
+          <div
+            id="card-modal-inner"
+            class="hidden-custom inline-block mt-16 bg-white p-16 rounded-lg text-left w-4xl shadow-xl"
+          >
+            <div>
+              <h1 class="text-3xl font-bold">Post title</h1>
+              <div class="my-3">
+                <span class="text-gray-500"
+                  >Posted by <span class="text-purple-500">Username</span> at
+                  <span>timestamp</span></span
+                >
+              </div>
+              <p class="text-gray-700">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum earum, fugiat
+                iusto, debitis fuga vero maxime sequi ducimus aspernatur facere nemo optio neque
+                quam perspiciatis nihil porro nisi? Commodi ab, laudantium praesentium recusandae at
+                blanditiis ex modi aspernatur omnis numquam ad deserunt sequi illo sapiente quisquam
+                eos voluptate maiores, obcaecati quae aliquid. Modi quae adipisci quos laudantium
+                dolores harum deleniti?
+                <br /><br />
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores laborum reiciendis
+                a vero cum minus beatae quas vel temporibus, dolorem dicta voluptatem fuga suscipit
+                accusamus.
+                <br /><br />
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum earum, fugiat
+                iusto, debitis fuga vero maxime sequi ducimus aspernatur facere nemo optio neque
+                quam perspiciatis nihil porro nisi? Commodi ab, laudantium praesentium recusandae at
+                blanditiis ex modi aspernatur omnis numquam ad deserunt sequi illo sapiente quisquam
+                eos voluptate maiores, obcaecati quae aliquid. Modi quae adipisci quos laudantium
+                dolores harum deleniti?
+              </p>
+            </div>
+            <div id="comments" class="mt-8">
+              <div id="make-comment">
+                <span class="text-gray-400 text-sm">Comment as <span class="text-purple-500">yourUsername</span></span>
+                <textarea
+                  maxlength="2048"
+                  class="mt-2 text-sm text-gray-500 border-2 border-gray-300 py-4 px-6 rounded-md w-full min-h-30 max-h-40"
+                  type="text"
+                  placeholder="What are your thoughts?"
+                ></textarea>
+                <div class="flex flex-row-reverse">
+                  <button type="button"
+                  class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ml-3 sm:w-auto sm:text-sm"
+                >
+                  Post
+                </button>
+                </div>
+              </div>
+            <!-- <div class="hr mt-6"></div> -->
+
+              <!-- <div class="uppercase py-3 tracking-wider text-gray-900 text-sm">Discussion</div> -->
+              <div id="comment-block" class="w-full text-sm py-6">
+                <span class="text-gray-500"
+                  ><span class="text-purple-500">Username</span> 5 hours ago</span
+                >
+                <div class="mt-2">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus a delectus
+                    veritatis cupiditate vitae pariatur, perspiciatis consectetur accusamus
+                    praesentium. Necessitatibus?
+                  </p>
+                </div>
+              </div>
+              <div class="hr"></div>
+              <div id="comment-block" class="w-full text-sm py-6">
+                <span class="text-gray-500"
+                  ><span class="text-purple-500">Username</span> 5 hours ago</span
+                >
+                <div class="mt-2">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus a delectus
+                    veritatis cupiditate vitae pariatur, perspiciatis consectetur accusamus
+                    praesentium. Necessitatibus?
+                  </p>
+                </div>
+              </div>
+              <div class="hr"></div>
             </div>
           </div>
         </div>

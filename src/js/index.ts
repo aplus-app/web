@@ -92,6 +92,18 @@ const app = component({
     document.querySelector('#report-modal-bg').classList.add('hidden-custom');
     setTimeout(() => document.querySelector('#report-modal').classList.add('hidden'), 100);
   },
+  openCard() {
+    document.querySelector('#card-modal').classList.remove('hidden');
+    setTimeout(() => {
+      document.querySelector('#card-modal-inner').classList.remove('hidden-custom');
+      document.querySelector('#card-modal-bg').classList.remove('hidden-custom');
+    }, 20);
+  },
+  closeCard() {
+    document.querySelector('#card-modal-inner').classList.add('hidden-custom');
+    document.querySelector('#card-modal-bg').classList.add('hidden-custom');
+    setTimeout(() => document.querySelector('#card-modal').classList.add('hidden'), 100);
+  }
 });
 app.mount('#app');
 
