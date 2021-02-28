@@ -5,13 +5,17 @@ import identity from 'netlify-identity-widget';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 identity.init();
+const API_URL = 'https://example.com';
 
 const app = component({
+  API_URL,
   DOMPurify,
   marked,
+  searchQuery: '',
   loggedIn: false,
   currentPostTitle: '',
   currentPostBody: '',
+  originalPosts: [],
   latestPosts: [],
   trendingPosts: [],
   posts: [
@@ -49,16 +53,22 @@ const app = component({
   createPost({ title, body }) {
     const user = this.getUser();
     if (!user) alert('You cannot use this method');
+    const [category] = (title + body).match(/math|science|english|foreign language|history/gim);
+
     const payload = {
       user_name: user.user_metadata.full_name,
       user_id: user.id,
       title,
       body,
+      category,
     };
     closeModal();
+    this.originalPosts = [payload, ...this.originalPosts];
     this.posts = [payload, ...this.posts];
     this.latestPosts = [payload, ...this.latestPosts];
     this.trendingPosts = [payload, ...this.trendingPosts];
+
+    fetch(`${API_URL}/create-post`, { method: 'POST', body: payload });
   },
   __init() {
     this.loggedIn = !!this.getUser();
@@ -96,6 +106,7 @@ try {
   }
 
   app.state.posts = app.state.trendingPosts;
+  app.state.originalPosts = [...app.state.posts];
 } catch (err) {
   console.error(err);
 }
