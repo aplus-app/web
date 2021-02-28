@@ -12,7 +12,24 @@ const app = component({
   loggedIn: false,
   currentPostTitle: '',
   currentPostBody: '',
-  posts: [],
+  posts: [
+    {
+      name: 'Gamer Man',
+      id: 'asdasdasd',
+      title: 'owo',
+      body: 'owo',
+      hearts: 69,
+    },
+    {
+      name: 'Gamer Man 2',
+      id: 'asdasdasd',
+      title: 'owo',
+      body: 'owo',
+      hearts: 420,
+    },
+  ],
+  userHearts: 0,
+  topUsers: [],
   getUser(): boolean {
     return identity.currentUser();
   },
@@ -34,7 +51,6 @@ const app = component({
     };
     closeModal();
     this.posts.unshift(payload);
-    
   },
   __init() {
     this.loggedIn = !!this.getUser();
@@ -44,6 +60,11 @@ const app = component({
 app.mount('#app');
 
 app.state.__init();
+
+app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
+app.state.topUsers = app.state.posts.slice(0, 3);
+
+app.state.userHearts = app.state.filter((post) => post.id === app.state.getUser().id);
 
 identity.on('login', (user) => {
   app.state.loggedIn = true;
@@ -89,10 +110,10 @@ document.addEventListener(
   false
 );
 
-document.querySelector('#sign-out').addEventListener('click', function() {
+document.querySelector('#sign-out').addEventListener('click', function () {
   setTimeout(() => userMenu.classList.add('hidden'), 100);
   setTimeout(() => userMenu.classList.add('hidden-custom'), 20);
-})
+});
 
 // mobileMenuBtn.addEventListener('click', function () {
 //   mobileMenu.classList.toggle('hidden');
@@ -113,8 +134,6 @@ function closeModal() {
   document.querySelector('#post-modal-bg').classList.add('hidden-custom');
   setTimeout(() => postModal.classList.add('hidden'), 100);
 }
-
-
 
 cancelPostBtn.addEventListener('click', () => closeModal());
 
