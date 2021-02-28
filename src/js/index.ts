@@ -11,9 +11,11 @@ const app = component({
   API_URL,
   DOMPurify,
   marked,
+  searchQuery: '',
   loggedIn: false,
   currentPostTitle: '',
   currentPostBody: '',
+  originalPosts: [],
   latestPosts: [],
   trendingPosts: [],
   posts: [
@@ -61,6 +63,7 @@ const app = component({
       category,
     };
     closeModal();
+    this.originalPosts = [payload, ...this.originalPosts];
     this.posts = [payload, ...this.posts];
     this.latestPosts = [payload, ...this.latestPosts];
     this.trendingPosts = [payload, ...this.trendingPosts];
@@ -103,6 +106,7 @@ try {
   }
 
   app.state.posts = app.state.trendingPosts;
+  app.state.originalPosts = [...app.state.posts];
 } catch (err) {
   console.error(err);
 }
