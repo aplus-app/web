@@ -62,6 +62,18 @@ const app = component({
     if (!this.loggedIn) identity.open();
     document.querySelector('#user-btn').innerText = this.getUser()?.user_metadata?.full_name;
   },
+  openReport() {
+    document.querySelector('#report-modal').classList.remove('hidden');
+    setTimeout(() => {
+      document.querySelector('#report-modal-inner').classList.remove('hidden-custom');
+      document.querySelector('#report-modal-bg').classList.remove('hidden-custom');
+    }, 20);
+  },
+  closeReport() {
+    document.querySelector('#report-modal-inner').classList.add('hidden-custom');
+    document.querySelector('#report-modal-bg').classList.add('hidden-custom');
+    setTimeout(() => document.querySelector('#report-modal').classList.add('hidden'), 100);
+  },
 });
 app.mount('#app');
 
@@ -96,10 +108,22 @@ identity.on('logout', () => {
 });
 // Mobile Menu
 
+// function openReport() {
+//   document.querySelector('#report-modal').classList.remove('hidden');
+//   setTimeout(() => {
+//     document.querySelector('#report-modal-inner').classList.remove('hidden-custom');
+//     document.querySelector('#report-modal-bg').classList.remove('hidden-custom');
+//   }, 20);
+// }
+
+// function closeReport() {
+//   document.querySelector('#report-modal-inner').classList.add('hidden-custom');
+//   document.querySelector('#report-modal-bg').classList.add('hidden-custom');
+//   setTimeout(() => document.querySelector('#report-modal').classList.add('hidden'), 100);
+// }
+
 let userBtn = document.querySelector('#user-btn');
 let userMenu = document.querySelector('#user-menu');
-// let mobileMenu = document.querySelector('#mobile-menu');
-// let mobileMenuBtn = document.querySelector('#mobile-menu-button');
 let createPostBtn = document.querySelector('#create-post');
 let cancelPostBtn = document.querySelector('#cancel-post');
 let postModal = document.querySelector('#post-modal');

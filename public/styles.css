@@ -50,13 +50,13 @@
   transition: all 0.2s ease;
 }
 
-#post-modal-inner {
+#post-modal-inner, #report-modal-inner {
   opacity: 1;
   transform: scale(1);
   transition: all 0.2s ease;
 }
 
-#post-modal-bg {
+#post-modal-bg, #report-modal-bg {
   opacity: 0.7;
   transition: all 0.3s ease;
 }
@@ -66,15 +66,14 @@
   transform: scale(0.95);
 }
 
-#post-modal-inner.hidden-custom {
+#post-modal-inner.hidden-custom, #report-modal-inner.hidden-custom {
   opacity: 0;
   transform: scale(0.95);
 }
 
-#post-modal-bg.hidden-custom {
+#post-modal-bg.hidden-custom, #report-modal-bg.hidden-custom {
   opacity: 0;
 }
-
 #create-post {
   background-color: #8b5cf6 !important;
 }
