@@ -275,11 +275,25 @@
                 if (this.post.heartedByUser) {
                   this.post.hearts++;
                   localStorage[this.post.id] = true;
-                  fetch(`${API_URL}/add-heart`, { method: 'POST', body: { id: this.post.id } });
+                  fetch(`${API_URL}/add-heart`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: this.post.id }),
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    // mode: 'cors'
+                  });
                 } else {
                   this.post.hearts--;
                   delete localStorage[this.post.id];
-                  fetch(`${API_URL}/remove-heart`, { method: 'POST', body: { id: this.post.id } });
+                  fetch(`${API_URL}/remove-heart`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: this.post.id }),
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    // mode: 'cors'
+                  });
                 }
               "
               >

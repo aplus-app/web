@@ -5,7 +5,7 @@ import identity from 'netlify-identity-widget';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 identity.init();
-const API_URL = 'https://ec2-34-212-36-74.us-west-2.compute.amazonaws.com';
+const API_URL = 'http://ec2-34-212-36-74.us-west-2.compute.amazonaws.com';
 
 const app = component({
   API_URL,
@@ -108,7 +108,15 @@ const app = component({
     this.latestPosts = [payload, ...this.latestPosts];
     this.trendingPosts = [payload, ...this.trendingPosts];
 
-    fetch(`${API_URL}/create-post`, { method: 'POST', body: payload });
+    fetch(`${API_URL}/create-post`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(payload),
+    });
   },
   __init() {
     this.loggedIn = !!this.getUser();
