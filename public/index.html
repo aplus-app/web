@@ -95,7 +95,7 @@
         <div id="browse-container" class="float-left h-16">
           <div id="menu-block" class="flex flex-col w-full text-sm text-gray-400">
             <div id="main-menu">
-              <div class="uppercase py-3 tracking-wider">Menu</div>
+              <div class="uppercase py-3 tracking-wider">Sort</div>
               <div
                 id="sort"
                 class="selected rounded-md my-1 py-2 px-2 flex items-center cursor-pointer"
@@ -344,7 +344,13 @@
               </div>
               <div id="card-content" class="flex-1">
                 <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
-                <div class="mt-2 text-gray-500 text-base leading-8">
+                <div class="my-4">
+                  <span
+                    class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white self-start"
+                    >Subject</span
+                  >
+                </div>
+                <div class="text-gray-500 text-base leading-8">
                   <p l-html="DOMPurify.sanitize(marked(this.post.body))">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ad cumque sequi
                     molestiae hic saepe cupiditate, ab soluta blanditiis autem earum voluptas dolore
@@ -396,7 +402,7 @@
             </div>
           </div>
           <button
-            class="px-12 py-3 text-md bg-gray-900 mt-8 mx-auto text-white hover:bg-gray-800 rounded-md flex justify-center items-center"
+            class="px-12 py-3 text-md mb-4 bg-gray-900 mt-8 mx-auto text-white hover:bg-gray-800 rounded-md flex justify-center items-center"
             :hidden="!loggedIn"
           >
             <svg
@@ -524,6 +530,19 @@
                 <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
                   Create a post
                 </h3>
+                <div class="mt-2">
+                  <!-- <label class="block text-sm font-medium text-gray-700">Subject</label> -->
+                  <select
+                    class="text-sm text-gray-500 border-2 border-gray-300 py-2 px-3 rounded-md w-1/3"
+                  >
+                    <option disabled selected>Choose a subject</option>
+                    <option>Math</option>
+                    <option>Science</option>
+                    <option>English</option>
+                    <option>Foreign Language</option>
+                    <option>History</option>
+                  </select>
+                </div>
                 <div class="mt-2">
                   <input
                     l-model="currentPostTitle"
@@ -665,6 +684,15 @@
               >
                 Delete
               </button>
+
+              <!-- <h1 class="text-3xl font-bold">Post title</h1>
+              <div class="my-4">
+                <span
+                  class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white"
+                  >Subject</span
+                >
+              </div> -->
+
               <div class="my-3">
                 <span class="text-gray-500"
                   >Posted by
