@@ -16,7 +16,7 @@
     <title>Aplus</title>
   </head>
   <body>
-    <div id="app" class="clearfix">
+    <div id="app">
       <nav class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div class="relative flex items-center justify-between h-16">
@@ -254,8 +254,8 @@
           </div>
         </div>
 
-        <div id="feed-container" class="align-top float-left h-16 space-y-12" l-mask>
-          <div l-for="post in posts">
+        <div id="feed-container" class="align-top float-left h-16" l-mask>
+          <div l-for="post in posts" class="space-y-12">
             <div class="w-full flex p-8 shadow-custom rounded-md">
               <div
                 class="flex flex-col items-center pr-8"
@@ -362,77 +362,76 @@
             </div>
           </div>
           <button
-            class="px-4 py-3 w-full text-md bg-gray-900 text-white rounded-md flex justify-center"
+            class="px-12 py-3 text-md bg-gray-900 mt-8 mx-auto text-white hover:bg-gray-800 rounded-md flex justify-center items-center"
             :hidden="!loggedIn"
           >
             <svg
               class="mr-1"
+              height="20"
+              width="20"
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              viewBox="0 0 20 20"
+              fill="currentColor"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="{2}"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                fillRule="evenodd"
+                d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                clipRule="evenodd"
               />
             </svg>
             <span>Load More</span>
           </button>
         </div>
 
-        <div id="util-container" class="float-left h-16 space-y-12">
-          <button
-            class="px-4 py-3 w-full text-md bg-gray-900 text-white rounded-md flex justify-center"
-            :hidden="!loggedIn"
-            id="create-post"
-          >
-            <svg
-              class="mr-1"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div id="util-container" class="float-left h-16">
+          <div class="space-y-4">
+            <button
+              class="px-4 py-3 w-full text-md bg-gray-900 text-white rounded-md flex justify-center"
+              :hidden="!loggedIn"
+              id="create-post"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="{2}"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-            <span>Create a New Post</span>
-          </button>
-          <button
-            class="px-4 py-3 w-full text-md bg-gray-900 text-white rounded-md flex justify-center"
-            :hidden="!loggedIn"
-            @click="alert('Coming soon!')"
-          >
-            <svg
-              class="mr-1"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              <svg
+                class="mr-1"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="{2}"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+              <span>Create a New Post</span>
+            </button>
+            <button
+              class="px-4 py-3 w-full text-md bg-gray-900 hover:bg-gray-800 text-white rounded-md flex justify-center items-center"
+              :hidden="!loggedIn"
+              @click="alert('Coming soon!')"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="{2}"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-            <span>Talk to a Counselor</span>
-          </button>
-          <div id="top-users" class="w-full flex flex-col p-8 shadow-custom rounded-md">
+              <svg
+                class="mr-2"
+                width="20"
+                height="20"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+                />
+                <path
+                  d="M16.707 3.293a1 1 0 010 1.414L15.414 6l1.293 1.293a1 1 0 01-1.414 1.414L14 7.414l-1.293 1.293a1 1 0 11-1.414-1.414L12.586 6l-1.293-1.293a1 1 0 011.414-1.414L14 4.586l1.293-1.293a1 1 0 011.414 0z"
+                />
+              </svg>
+              <span>Talk to a Counselor</span>
+            </button>
+          </div>
+          <div id="top-users" class="w-full mt-8 flex flex-col p-8 shadow-custom rounded-md">
             <span class="text-base font-medium mb-3">Top Users</span>
             <div l-for="post in topUsers">
               <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
