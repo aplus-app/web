@@ -16,792 +16,352 @@
     <title>Aplus</title>
   </head>
   <body>
-    <div id="app">
-      <nav class="bg-gray-800">
-        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-          <div class="relative flex items-center justify-between h-16">
-            <div class="flex sm:items-stretch sm:justify-start">
-              <img class="block h-8 w-auto" src="./assets/logo.png" alt="Logo" />
-            </div>
-            <div class="text-gray-100 w-1/3 relative">
-              <form
-                @submit.prevent="posts = originalPosts.filter((post) => new RegExp(searchQuery, 'gim').test(post.title + post.body))"
-              >
-                <input
-                  type="search"
-                  placeholder="Search... (Press Enter)"
-                  class="bg-gray-900 w-full h-10 px-5 pr-16 text-sm rounded-md focus:outline-none"
-                  l-model="searchQuery"
-                />
-                <button
-                  type="submit"
-                  class="absolute right-0 top-1/2 mr-4 transform -translate-y-1/2"
-                >
-                  <svg
-                    class="fill-current"
-                    width="16"
-                    height="16"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    version="1.1"
-                    id="Capa_1"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 56.966 56.966"
-                    style="enable-background: new 0 0 56.966 56.966"
-                    xml:space="preserve"
-                  >
-                    <path
-                      d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"
-                    />
-                  </svg>
-                </button>
-              </form>
-            </div>
-            <div>
-              <button
-                @click="identifyAction"
-                :hidden="loggedIn"
-                class="px-4 py-2 text-sm bg-gray-900 text-white rounded-md font-medium"
-              >
-                Login
-              </button>
+    <div class="relative bg-white overflow-hidden">
+      <div class="max-w-7xl mx-auto">
+        <div
+          class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32"
+        >
+          <svg
+            class="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
+            fill="currentColor"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <polygon points="50,0 100,0 50,100 0,100" />
+          </svg>
 
-              <div class="ml-3 relative" :hidden="!loggedIn">
-                <div>
-                  <button
-                    class="bg-gray-800 flex text-white text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                    id="user-btn"
-                  ></button>
-                </div>
-              </div>
-              <div
-                class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-gray-900 ring-opacity-5 hidden hidden-custom"
-                id="user-menu"
-              >
-                <a
-                  id="sign-out"
-                  @click="identifyAction"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >Sign out</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <div id="feed-main" class="clearfix max-w-7xl mx-auto my-14 space-x-8">
-        <div id="browse-container" class="float-left h-16">
-          <div id="menu-block" class="flex flex-col w-full text-sm text-gray-400">
-            <div id="main-menu">
-              <div class="uppercase py-3 tracking-wider">Sort</div>
-              <div
-                id="sort"
-                class="selected rounded-md my-1 py-2 px-2 flex items-center cursor-pointer"
-                @click="const p = [...posts].sort((post1, post2) => post2.hearts - post1.hearts); posts = p; mode = 'trending'"
-              >
-                <svg
-                  class="mr-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>Trending</span>
-              </div>
-              <div
-                id="sort"
-                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-                @click="posts = originalPosts.filter(({ id }) => posts.some((post) => id === post.id)); mode = 'latest'"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  class="mr-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>Latest</span>
-              </div>
-            </div>
-            <div id="subject-menu">
-              <div class="uppercase py-3 tracking-wider">Subjects</div>
-              <div
-                id="subject"
-                @click="
-                  if (mode === 'trending') {
-                    posts = [...originalPosts].sort((post1, post2) => post2.hearts - post1.hearts);
-                  } else {
-                    posts = [...originalPosts];
-                  }
-                "
-                class="selected rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-              >
-                <svg
-                  class="mr-1"
-                  width="20"
-                  height="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>All</span>
-              </div>
-              <div
-                id="subject"
-                @click="posts = originalPosts.filter((post) => post.category.toLowerCase() === 'math'); console.log(originalPosts)"
-                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-              >
-                <svg
-                  class="mr-1"
-                  width="20"
-                  height="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"
-                  />
-                </svg>
-                <span>Math</span>
-              </div>
-              <div
-                id="subject"
-                @click="posts = originalPosts.filter((post) => post.category.toLowerCase() === 'science')"
-                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-              >
-                <svg
-                  class="mr-1"
-                  width="20"
-                  height="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>Science</span>
-              </div>
-              <div
-                id="subject"
-                @click="posts = originalPosts.filter((post) => post.category.toLowerCase() === 'english')"
-                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-              >
-                <svg
-                  class="mr-1"
-                  width="20"
-                  height="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"
-                  />
-                </svg>
-                <span>English</span>
-              </div>
-              <div
-                id="subject"
-                @click="posts = originalPosts.filter((post) => post.category.toLowerCase() === 'foreign language')"
-                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-              >
-                <svg
-                  class="mr-1"
-                  width="20"
-                  height="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7 2a1 1 0 011 1v1h3a1 1 0 110 2H9.578a18.87 18.87 0 01-1.724 4.78c.29.354.596.696.914 1.026a1 1 0 11-1.44 1.389c-.188-.196-.373-.396-.554-.6a19.098 19.098 0 01-3.107 3.567 1 1 0 01-1.334-1.49 17.087 17.087 0 003.13-3.733 18.992 18.992 0 01-1.487-2.494 1 1 0 111.79-.89c.234.47.489.928.764 1.372.417-.934.752-1.913.997-2.927H3a1 1 0 110-2h3V3a1 1 0 011-1zm6 6a1 1 0 01.894.553l2.991 5.982a.869.869 0 01.02.037l.99 1.98a1 1 0 11-1.79.895L15.383 16h-4.764l-.724 1.447a1 1 0 11-1.788-.894l.99-1.98.019-.038 2.99-5.982A1 1 0 0113 8zm-1.382 6h2.764L13 11.236 11.618 14z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>Foreign Language</span>
-              </div>
-              <div
-                id="subject"
-                @click="posts = originalPosts.filter((post) => post.category.toLowerCase() === 'history')"
-                class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-              >
-                <svg
-                  class="mr-1"
-                  width="20"
-                  height="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"
-                  />
-                </svg>
-                <span>History</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="feed-container" class="align-top float-left h-16 space-y-12">
-          <div l-for="(post, i) in posts" class="space-y-12" l-mask>
-            <div
-              class="w-full flex p-8 shadow-custom rounded-md cursor-pointer"
-              @click="if (!(typeof $event.target.className === 'string' ? $event.target.className : 'post-skip').includes('post-skip')) { openCard(this.i) }"
+          <div class="relative pt-6 px-4 sm:px-6 lg:px-8">
+            <nav
+              class="relative flex items-center justify-between sm:h-10 lg:justify-start"
+              aria-label="Global"
             >
-              <div
-                class="flex flex-col items-center pr-8 post-skip"
-                @click="
-                this.post.heartedByUser = !this.post.heartedByUser;
-                if (this.post.heartedByUser) {
-                  this.post.hearts++;
-                  fetch(`${API_URL}/add-heart`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: +this.post.id }),
-                    redirect: 'follow',
-                    referrerPolicy: 'no-referrer',
-                    // mode: 'cors'
-                  });
-                } else {
-                  this.post.hearts--;
-                  fetch(`${API_URL}/remove-heart`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: +this.post.id }),
-                    redirect: 'follow',
-                    referrerPolicy: 'no-referrer',
-                    // mode: 'cors'
-                  });
-                }
-              "
-              >
-                <div :hidden="this.post.heartedByUser">
-                  <svg
-                    id="unheart"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="{2}"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    />
-                  </svg>
-                </div>
-                <div :hidden="!this.post.heartedByUser">
-                  <svg
-                    id="heart"
-                    width="24"
-                    height="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-
-                <span class="my-2 font-medium post-skip" l-text="this.post.hearts || 0"></span>
-              </div>
-              <div id="card-content" class="flex-1">
-                <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
-                <div class="my-4">
-                  <span
-                    class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white self-start"
-                    l-text="this.post.category"
-                  ></span>
-                </div>
-                <div class="text-gray-500 text-base leading-8">
-                  <p l-html="DOMPurify.sanitize(marked(this.post.body))">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ad cumque sequi
-                    molestiae hic saepe cupiditate, ab soluta blanditiis autem earum voluptas dolore
-                    aliquam enim accusantium illo expedita eius vel dolores! Saepe voluptatem autem
-                    laborum ut facilis quia unde dolor.
-                  </p>
-                </div>
-                <div class="hr my-6"></div>
-                <div id="card-meta" class="text-sm text-gray-400 flex justify-between">
-                  <span class=""
-                    >Posted by <a l-text="this.post.user_name" class="text-purple-500"></a
-                  ></span>
-                  <span l-text="this.post.date || new Date().toLocaleDateString()"></span>
-                  <div class="flex items-center">
-                    <svg
-                      width="20"
-                      height="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
+              <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+                <div class="flex items-center justify-between w-full md:w-auto">
+                  <a href="#">
+                    <span class="sr-only">Workflow</span>
+                    <img class="h-8 w-auto sm:h-10" src="./assets/logo.png" />
+                  </a>
+                  <div class="-mr-2 flex items-center md:hidden">
+                    <button
+                      type="button"
+                      class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500"
+                      aria-expanded="false"
                     >
-                      <path
-                        d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"
-                      />
-                      <path
-                        d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"
-                      />
-                    </svg>
-                    <span class="inline-block ml-2" l-text="this.post.comments?.length || 0"></span>
-
-                    <svg
-                      class="ml-4 cursor-pointer post-skip"
-                      @click="openReport()"
-                      width="20"
-                      height="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                      <span class="sr-only">Open main menu</span>
+                      <!-- Heroicon name: outline/menu -->
+                      <svg
+                        class="h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 6h16M4 12h16M4 18h16"
+                        />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <button
-            class="px-12 py-3 text-md mb-4 bg-gray-900 mt-8 mx-auto text-white hover:bg-gray-800 rounded-md flex justify-center items-center"
-            :hidden="!loggedIn"
-            @click="
-              posts.push(...POSTS.posts.slice(amountLoaded + 1, amountLoaded + 5));
-            "
-          >
-            <svg
-              class="mr-1"
-              height="20"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span>Load More</span>
-          </button>
-        </div>
-
-        <div id="util-container" class="float-left h-16">
-          <div class="space-y-4">
-            <button
-              class="px-4 py-3 w-full text-md bg-gray-900 text-white rounded-md flex justify-center"
-              :hidden="!loggedIn"
-              id="create-post"
-            >
-              <svg
-                class="mr-1"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="{2}"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
-              <span>Create a New Post</span>
-            </button>
-            <button
-              class="px-4 py-3 w-full text-md bg-gray-900 hover:bg-gray-800 text-white rounded-md flex justify-center items-center"
-              :hidden="!loggedIn"
-              @click="alert('Coming soon!')"
-            >
-              <svg
-                class="mr-2"
-                width="20"
-                height="20"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
-                />
-                <path
-                  d="M16.707 3.293a1 1 0 010 1.414L15.414 6l1.293 1.293a1 1 0 01-1.414 1.414L14 7.414l-1.293 1.293a1 1 0 11-1.414-1.414L12.586 6l-1.293-1.293a1 1 0 011.414-1.414L14 4.586l1.293-1.293a1 1 0 011.414 0z"
-                />
-              </svg>
-              <span>Talk to a Counselor</span>
-            </button>
-          </div>
-          <div id="top-users" class="w-full mt-8 flex flex-col p-8 shadow-custom rounded-md">
-            <span class="text-base font-medium mb-3">Top Posts</span>
-            <div l-for="post in topUsers">
-              <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
-                <span l-text="this.post.user_name"></span>
-                <div class="flex">
-                  <span class="mr-1" l-text="this.post.hearts || 0"></span>
-                  <svg
-                    width="20"
-                    height="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <div class="hr my-3"></div>
-            <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
-              <span>You</span>
-              <div class="flex">
-                <span class="mr-1" l-text="userHearts"></span>
-                <svg
-                  width="20"
-                  height="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+              <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+                <a
+                  href="https://devpost.com/software/aplus-n4uo6h"
+                  class="font-medium text-gray-500 hover:text-gray-900"
+                  >Devpost</a
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+
+                <a
+                  href="https://github.com/aplus-app"
+                  class="font-medium text-gray-500 hover:text-gray-900"
+                  >Github</a
+                >
+
+                <a href="/app" class="font-medium text-purple-600 hover:text-purple-500">Log in</a>
               </div>
-            </div>
+            </nav>
           </div>
-        </div>
-      </div>
-      <div id="post-modal" class="hidden flex fixed inset-0 z-10">
-        <div id="post-modal-bg" class="absolute inset-0 bg-gray-500"></div>
-        <div class="flex flex-col w-full justify-center items-center">
-          <div
-            id="post-modal-inner"
-            class="hidden-custom inline-block bg-white p-8 rounded-lg text-left overflow-hidden shadow-xl w-3xl"
-          >
-            <div class="sm:flex sm:items-start">
-              <div class="mt-3 w-full text-center sm:mt-0 sm:text-left">
-                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                  Create a post
-                </h3>
-                <div class="mt-2">
-                  <!-- <label class="block text-sm font-medium text-gray-700">Subject</label> -->
-                  <select
-                    class="text-sm text-gray-500 border-2 border-gray-300 py-2 px-3 rounded-md w-1/3"
-                    l-model="select"
-                  >
-                    <option disabled selected>Choose a subject</option>
-                    <option>Math</option>
-                    <option>Science</option>
-                    <option>English</option>
-                    <option>Foreign Language</option>
-                    <option>History</option>
-                  </select>
-                </div>
-                <div class="mt-2">
-                  <input
-                    l-model="currentPostTitle"
-                    class="text-sm text-gray-500 border-2 border-gray-300 py-2 px-3 rounded-md w-full"
-                    type="text"
-                    placeholder="Title"
+
+          <div class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+            <div
+              class="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
+            >
+              <div class="px-5 pt-4 flex items-center justify-between">
+                <div>
+                  <img
+                    class="h-8 w-auto"
+                    src="https://tailwindui.com/img/logos/workflow-mark-purple-600.svg"
+                    alt=""
                   />
                 </div>
-                <div class="mt-2">
-                  <textarea
-                    maxlength="2048"
-                    l-model="currentPostBody"
-                    id="post-textbox"
-                    class="text-sm text-gray-500 shadow-inner border-2 border-gray-300 py-2 px-3 rounded-md w-full max-h-40"
-                    type="text"
-                    placeholder="Text (You can write markdown here)"
-                  ></textarea>
-                </div>
-                <div class="mt-2" :hidden="!currentPostBody">
-                  <h3 class="font-bold text-md mb-2">Markdown Preview</h3>
-                  <p>
-                    <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
-                      >Markdown Cheatsheet</a
-                    >
-                  </p>
-                  <div
-                    id="md-preview"
-                    class="text-sm text-gray-900 bg-gray-200 py-4 px-6 rounded-md w-full max-h-40 overflow-y-auto"
-                    l-html="DOMPurify.sanitize(marked(currentPostBody))"
-                  ></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex flex-row-reverse mt-4 items-end">
-              <button
-                @click="
-                  if (currentPostTitle.length > 0 && currentPostBody.length > 0 && currentPostTitle.length < 128 && currentPostBody.length < 2048) {
-                    createPost({ title: DOMPurify.sanitize(currentPostTitle), body: DOMPurify.sanitize(currentPostBody) });
-                    currentPostTitle = '';
-                    currentPostBody = '';
-                  } else {
-                    alert('Invalid content in your title or post');
-                  }
-                "
-                type="button"
-                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ml-3 sm:w-auto sm:text-sm"
-              >
-                Post
-              </button>
-              <button
-                type="button"
-                id="cancel-post"
-                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="report-modal" class="hidden flex fixed inset-0 z-10">
-        <div id="report-modal-bg" class="hidden-custom absolute inset-0 -z-1 bg-gray-500"></div>
-        <div class="flex flex-col w-full justify-center items-center">
-          <div
-            id="report-modal-inner"
-            class="hidden-custom inline-block bg-white p-8 rounded-lg text-left overflow-hidden w-md shadow-xl"
-          >
-            <div class="mt-3">
-              <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                Report this post
-              </h3>
-              <div class="mt-4 text-gray-500 text-sm">
-                <textarea
-                  maxlength="280"
-                  class="text-sm text-gray-500 shadow-inner border-2 border-gray-300 py-2 px-3 rounded-md w-full max-h-40"
-                  type="text"
-                  id="report-textarea"
-                  placeholder="Reason"
-                ></textarea>
-              </div>
-            </div>
-
-            <div class="flex flex-row-reverse mt-4 items-end">
-              <button
-                type="button"
-                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ml-3 sm:w-auto sm:text-sm"
-                @click="
-                  if (document.querySelector('#report-textarea').value.length > 0) {
-                    reportPost();
-                    closeReport();
-                  } else {
-                    alert('Please provide a reason');
-                  }
-                "
-                id="reportButton"
-              >
-                Report
-              </button>
-              <button
-                type="button"
-                id="cancel-report"
-                @click="closeReport()"
-                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="card-modal" class="hidden flex fixed overflow-y-scroll inset-0 z-10">
-        <div
-          id="card-modal-bg"
-          class="hidden-custom fixed inset-0 bg-gray-500 cursor-pointer"
-          @click="closeCard()"
-        ></div>
-        <div class="flex flex-col w-full items-center">
-          <div
-            id="card-modal-inner"
-            class="hidden-custom inline-block mt-16 bg-white p-16 rounded-lg text-left w-4xl shadow-xl"
-          >
-            <div>
-              <h1 class="text-3xl font-bold" l-text="posts[i].title">Post title</h1>
-              <button
-                :style="{ display: getUser().user_metadata.full_name !== posts[i].user_name ? 'none' : 'block' }"
-                @click="
-                  fetch(`${API_URL}/delete-post`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    redirect: 'follow',
-                    referrerPolicy: 'no-referrer',
-                    body: JSON.stringify({
-                      id: +posts[i].id,
-                    }),
-                  }).then((res) => res.text()).then(() => {
-                    location.reload(false);
-                  });
-                "
-                type="button"
-                class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-red-600 text-white self-start"
-              >
-                Delete
-              </button>
-
-              <!-- <h1 class="text-3xl font-bold">Post title</h1> -->
-              <div class="my-4">
-                <span
-                  class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white"
-                  l-text="posts[i].category"
-                ></span>
-              </div>
-
-              <div class="my-3">
-                <span class="text-gray-500"
-                  >Posted by
-                  <span class="text-purple-500" l-text="posts[i].user_name">Username</span> at
-                  <span l-text="new Date().toLocaleDateString()">timestamp</span></span
-                >
-              </div>
-              <p class="text-gray-700" l-html="DOMPurify.sanitize(marked(posts[i].body || ''))">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum earum, fugiat
-                iusto, debitis fuga vero maxime sequi ducimus aspernatur facere nemo optio neque
-                quam perspiciatis nihil porro nisi? Commodi ab, laudantium praesentium recusandae at
-                blanditiis ex modi aspernatur omnis numquam ad deserunt sequi illo sapiente quisquam
-                eos voluptate maiores, obcaecati quae aliquid. Modi quae adipisci quos laudantium
-                dolores harum deleniti?
-                <br /><br />
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores laborum reiciendis
-                a vero cum minus beatae quas vel temporibus, dolorem dicta voluptatem fuga suscipit
-                accusamus.
-                <br /><br />
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum earum, fugiat
-                iusto, debitis fuga vero maxime sequi ducimus aspernatur facere nemo optio neque
-                quam perspiciatis nihil porro nisi? Commodi ab, laudantium praesentium recusandae at
-                blanditiis ex modi aspernatur omnis numquam ad deserunt sequi illo sapiente quisquam
-                eos voluptate maiores, obcaecati quae aliquid. Modi quae adipisci quos laudantium
-                dolores harum deleniti?
-              </p>
-            </div>
-            <div id="comments" class="mt-8">
-              <div id="make-comment">
-                <span class="text-gray-400 text-sm"
-                  >Comment as
-                  <span class="text-purple-500" l-text="getUser().user_metadata.full_name"
-                    >yourUsername</span
-                  ></span
-                >
-                <textarea
-                  maxlength="2048"
-                  class="mt-2 text-sm text-gray-500 border-2 border-gray-300 py-4 px-6 rounded-md w-full min-h-30 max-h-40"
-                  type="text"
-                  l-model="currentCommentText"
-                  placeholder="What are your thoughts?"
-                ></textarea>
-                <div class="flex flex-row-reverse">
+                <div class="-mr-2">
                   <button
-                    @click="if (currentCommentText.length > 0) { createComment({ user_name: getUser().user_metadata.full_name, body: currentCommentText }); currentCommentText = '' } else { alert('Please provide content for comment') }"
                     type="button"
-                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ml-3 sm:w-auto sm:text-sm"
+                    class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500"
                   >
-                    Post
+                    <span class="sr-only">Close main menu</span>
+                    <!-- Heroicon name: outline/x -->
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
                   </button>
                 </div>
               </div>
-              <!-- <div class="hr mt-6"></div> -->
+              <div class="px-2 pt-2 pb-3 space-y-1">
+                <a
+                  href="#"
+                  class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                  >Product</a
+                >
 
-              <!-- <div class="uppercase py-3 tracking-wider text-gray-900 text-sm">Discussion</div> -->
-              <div l-for="(comment, i) of comments">
-                <div>
-                  <div id="comment-block" class="w-full text-sm py-6">
-                    <span class="text-gray-500"
-                      ><span class="text-purple-500" l-text="this.comment.user_name">Username</span>
-                      <span l-text="new Date().toLocaleDateString()"></span
-                    ></span>
+                <a
+                  href="#"
+                  class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                  >Features</a
+                >
 
-                    <button
-                      :style="{ display: getUser().user_metadata.full_name !== this.comment.user_name ? 'none' : 'block' }"
-                      @click="
-                        fetch(`${API_URL}/delete-comment`, {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          redirect: 'follow',
-                          referrerPolicy: 'no-referrer',
-                          body: JSON.stringify({
-                            id: +this.comment.id,
-                          }),
-                        }).then((res) => res.text()).then(() => {
-                          location.reload(false);
-                        })
-                      "
-                      type="button"
-                      class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-red-600 text-white self-start"
-                    >
-                      Delete
-                    </button>
-                    <div class="mt-2">
-                      <p l-html="DOMPurify.sanitize(marked(this.comment.body || ''))">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus a
-                        delectus veritatis cupiditate vitae pariatur, perspiciatis consectetur
-                        accusamus praesentium. Necessitatibus?
-                      </p>
-                    </div>
-                  </div>
-                  <div class="hr"></div>
+                <a
+                  href="#"
+                  class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                  >Marketplace</a
+                >
+
+                <a
+                  href="#"
+                  class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                  >Company</a
+                >
+              </div>
+              <a
+                href="#"
+                class="block w-full px-5 py-3 text-center font-medium text-purple-600 bg-gray-50 hover:bg-gray-100"
+              >
+                Log in
+              </a>
+            </div>
+          </div>
+
+          <main
+            class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28"
+          >
+            <div class="sm:text-center lg:text-left">
+              <h1
+                class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl"
+              >
+                <span class="block xl:inline">Aplus: Let's learn</span>
+                <span class="block text-purple-600 xl:inline">together, not alone</span>
+              </h1>
+              <p
+                class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
+              >
+                Aplus is the social media for education - filling in the missing peer-to-peer
+                communication during remote learning.
+              </p>
+              <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                <div class="rounded-md shadow">
+                  <a
+                    href="/app"
+                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 md:py-4 md:text-lg md:px-10"
+                  >
+                    Get started
+                  </a>
+                </div>
+                <div class="mt-3 sm:mt-0 sm:ml-3">
+                  <a
+                    href="/app"
+                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 md:py-4 md:text-lg md:px-10"
+                  >
+                    Live demo
+                  </a>
                 </div>
               </div>
             </div>
-          </div>
+          </main>
+        </div>
+      </div>
+      <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+        <img
+          class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
+          style="filter: brightness(0.8)"
+          src="./assets/demo.jpg"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="py-12 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center">
+          <h2 class="text-base text-purple-600 font-semibold tracking-wide uppercase">APLUS</h2>
+          <p
+            class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
+          >
+            Features
+          </p>
+          <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+            Aplus offers a suite of features to use!
+          </p>
+        </div>
+
+        <div class="mt-10">
+          <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <div
+                  class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white"
+                >
+                  <!-- Heroicon name: outline/globe-alt -->
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div class="ml-4">
+                <dt class="text-lg leading-6 font-medium text-gray-900">Categorization</dt>
+                <dd class="mt-2 text-base text-gray-500">
+                  Users are able to categorize their posts into designated subsections, allowing for
+                  more clarity when accessing content. This allows more content to be engaged with a
+                  higher CTR from users. Aplus also automatically tries to suggest categories using
+                  natural-node's NLP tokenization and named entity recognition APIs, for more
+                  content accuracy.
+                </dd>
+              </div>
+            </div>
+
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <div
+                  class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white"
+                >
+                  <!-- Heroicon name: outline/scale -->
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div class="ml-4">
+                <dt class="text-lg leading-6 font-medium text-gray-900">Delivery</dt>
+                <dd class="mt-2 text-base text-gray-500">
+                  Aplus automatically does preprocessing server side before the page is interactive,
+                  determining which posts are most relevant to the user and displaying the posts as
+                  a feed with partial post loading. This allows for a more engaging experience and
+                  minimizes the extra overhead associated with viewing a large quantity of posts.
+                </dd>
+              </div>
+            </div>
+
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <div
+                  class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white"
+                >
+                  <!-- Heroicon name: outline/lightning-bolt -->
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div class="ml-4">
+                <dt class="text-lg leading-6 font-medium text-gray-900">Publishing</dt>
+                <dd class="mt-2 text-base text-gray-500">
+                  Students are able to easily create posts with a predictable API, meaning they can
+                  share ideas, projects, and even ask questions. Aplus automatically have upranking
+                  and reporting systems in place, making moderation substantially more streamlined
+                  and less time consuming.
+                </dd>
+              </div>
+            </div>
+
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <div
+                  class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white"
+                >
+                  <!-- Heroicon name: outline/annotation -->
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div class="ml-4">
+                <dt class="text-lg leading-6 font-medium text-gray-900">Productive</dt>
+                <dd class="mt-2 text-base text-gray-500">
+                  Although platforms such as Discord or Slack provide a hacky way to perform
+                  peer-to-peer communication, due to the instantaneous chat abilities, conversations
+                  are often non-productive. Aplus purposely creates a forum-like experience while
+                  making sure the interface is engaging, ensuring productivity in posts.
+                </dd>
+              </div>
+            </div>
+          </dl>
         </div>
       </div>
     </div>
-    <script src="./index.js"></script>
   </body>
 </html>
