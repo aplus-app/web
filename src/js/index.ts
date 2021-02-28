@@ -12,6 +12,8 @@ const app = component({
   loggedIn: false,
   currentPostTitle: '',
   currentPostBody: '',
+  latestPosts: [],
+  trendingPosts: [],
   posts: [
     {
       name: 'Gamer Man',
@@ -50,21 +52,39 @@ const app = component({
       body,
     };
     closeModal();
-    this.posts.unshift(payload);
+    this.posts = [payload, ...this.posts];
+    this.latestPosts = [payload, ...this.latestPosts];
+    this.trendingPosts = [payload, ...this.trendingPosts];
   },
   __init() {
     this.loggedIn = !!this.getUser();
+
+    if (!this.loggedIn) identity.open();
     document.querySelector('#user-btn').innerText = this.getUser()?.user_metadata?.full_name;
   },
 });
 app.mount('#app');
 
+try {
+  app.state.latestPosts = [...app.state.posts];
+  app.state.trendingPosts = [...app.state.posts];
+  app.state.trendingPosts.sort((post1, post2) => post2.hearts - post1.hearts);
+  app.state.topUsers = app.state.trendingPosts.slice(0, 3);
+
+  for (const post of [...app.state.trendingPosts]) {
+    if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
+  }
+
+  app.state.posts = app.state.trendingPosts;
+} catch (err) {
+  console.error(err);
+}
 app.state.__init();
 
-app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
-app.state.topUsers = app.state.posts.slice(0, 3);
-
-// app.state.userHearts = app.state.filter((post) => post.id === app.state.getUser().id);
+identity.on('close', () => {
+  if (app.state.loggedIn === true) return;
+  identity.open();
+});
 
 identity.on('login', (user) => {
   app.state.loggedIn = true;
@@ -74,11 +94,6 @@ identity.on('logout', () => {
   app.state.loggedIn = false;
   identity.open();
 });
-identity.on('close', () => {
-  if (app.state.loggedIn === true) return;
-  identity.open();
-});
-
 // Mobile Menu
 
 let userBtn = document.querySelector('#user-btn');
@@ -171,7 +186,12 @@ document.querySelectorAll('#subject').forEach(function (el) {
 // }))
 
 init();
-if (!app.state.loggedIn) identity.open();
+
+try {
+  trending();
+} catch (err) {
+  console.error(err);
+}
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab

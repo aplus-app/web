@@ -17,14 +17,9 @@ const index = {
     resolve(),
     commonjs(),
     terser({ format: { comments: false } }),
-    babel({
-      extensions: ['.ts'],
-      babelHelpers: 'bundled',
-      include: ['src/**/*'],
-    }),
     typescript({
       useTsconfigDeclarationDir: true,
-      tsconfigOverride: { compilerOptions: { target: 'es5' } },
+      tsconfigOverride: { compilerOptions: { target: 'es6' } },
     }),
   ],
 };

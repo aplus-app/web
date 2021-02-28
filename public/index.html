@@ -94,7 +94,8 @@
               <div class="uppercase py-3 tracking-wider">Menu</div>
               <div
                 id="sort"
-                class="selected rounded-md my-1 py-2 px-2 flex items-center cursor-pointer"
+                class="selected rounded-md my-1 py-2 px-2 bg-purple-100 text-purple-600 flex items-center cursor-pointer"
+                @click="posts = [...trendingPosts]"
               >
                 <svg
                   class="mr-1"
@@ -115,6 +116,7 @@
               <div
                 id="sort"
                 class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
+                @click="posts = [...latestPosts]"
               >
                 <svg
                   width="20"
@@ -135,15 +137,28 @@
             </div>
             <div id="subject-menu">
               <div class="uppercase py-3 tracking-wider">Subjects</div>
-              <div id="subject"
+              <div
+                id="subject"
                 class="selected rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
               >
-              <svg class="mr-1" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clipRule="evenodd" />
-              </svg>
+                <svg
+                  class="mr-1"
+                  width="20"
+                  height="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
+                    clipRule="evenodd"
+                  />
+                </svg>
                 <span>All</span>
               </div>
-              <div id="subject"
+              <div
+                id="subject"
                 class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
               >
                 <svg
@@ -160,7 +175,8 @@
                 </svg>
                 <span>Math</span>
               </div>
-              <div id="subject"
+              <div
+                id="subject"
                 class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
               >
                 <svg
