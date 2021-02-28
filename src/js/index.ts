@@ -64,7 +64,7 @@ app.state.__init();
 app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
 app.state.topUsers = app.state.posts.slice(0, 3);
 
-app.state.userHearts = app.state.filter((post) => post.id === app.state.getUser().id);
+// app.state.userHearts = app.state.filter((post) => post.id === app.state.getUser().id);
 
 identity.on('login', (user) => {
   app.state.loggedIn = true;
@@ -136,6 +136,29 @@ function closeModal() {
 }
 
 cancelPostBtn.addEventListener('click', () => closeModal());
+
+document.querySelectorAll('#sort').forEach(function (el) {
+  el.addEventListener('click', function () {
+    if (el.classList.contains('selected')) return;
+    document.querySelector('#sort.selected').classList.add('hover:bg-gray-100');
+    document.querySelector('#sort.selected').classList.remove('selected');
+
+    el.classList.remove('hover:bg-gray-100');
+    el.classList.add('selected');
+  });
+});
+
+document.querySelectorAll('#subject').forEach(function (el) {
+  el.addEventListener('click', function () {
+    if (el.classList.contains('selected')) return;
+
+    document.querySelector('#subject.selected').classList.add('hover:bg-gray-100');
+    document.querySelector('#subject.selected').classList.remove('selected');
+
+    el.classList.add('selected');
+    el.classList.remove('hover:bg-gray-100');
+  });
+});
 
 // document.querySelector('#unheart').forEach(addEventListener('click', function() {
 //   this.classList.toggle('hidden');

@@ -2,6 +2,11 @@
   visibility: hidden !important;
 }
 
+.selected {
+  background: #EDE9FE;
+  color: #7C3AED;
+}
+
 .clearfix::after {
   content: '';
   display: table;
