@@ -54,6 +54,8 @@ const app = component({
   },
   __init() {
     this.loggedIn = !!this.getUser();
+
+    if (!this.loggedIn) identity.open();
     document.querySelector('#user-btn').innerText = this.getUser()?.user_metadata?.full_name;
   },
 });
@@ -61,12 +63,10 @@ app.mount('#app');
 
 app.state.__init();
 
-app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
-app.state.topUsers = app.state.posts.slice(0, 3);
-
-for (const post of [...app.state.posts]) {
-  if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
-}
+identity.on('close', () => {
+  if (app.state.loggedIn === true) return;
+  identity.open();
+});
 
 identity.on('login', (user) => {
   app.state.loggedIn = true;
@@ -76,11 +76,6 @@ identity.on('logout', () => {
   app.state.loggedIn = false;
   identity.open();
 });
-identity.on('close', () => {
-  if (app.state.loggedIn === true) return;
-  identity.open();
-});
-
 // Mobile Menu
 
 let userBtn = document.querySelector('#user-btn');
@@ -150,7 +145,13 @@ cancelPostBtn.addEventListener('click', () => closeModal());
 // }))
 
 init();
-if (!app.state.loggedIn) identity.open();
+
+app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
+app.state.topUsers = app.state.posts.slice(0, 3);
+
+for (const post of [...app.state.posts]) {
+  if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
+}
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
