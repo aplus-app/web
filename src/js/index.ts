@@ -89,6 +89,11 @@ document.addEventListener(
   false
 );
 
+document.querySelector('#sign-out').addEventListener('click', function() {
+  setTimeout(() => userMenu.classList.add('hidden'), 100);
+  setTimeout(() => userMenu.classList.add('hidden-custom'), 20);
+})
+
 // mobileMenuBtn.addEventListener('click', function () {
 //   mobileMenu.classList.toggle('hidden');
 //   this.getElementsByTagName('svg')[0].classList.toggle('hidden');

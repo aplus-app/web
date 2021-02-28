@@ -46,6 +46,7 @@
               >
                 <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
                 <a
+                  id="sign-out"
                   @click="identifyAction"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >Sign out</a
@@ -78,7 +79,7 @@
                     clipRule="evenodd"
                   />
                 </svg>
-                <span>Home</span>
+                <span>Trending</span>
               </div>
               <div
                 class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
@@ -222,7 +223,7 @@
           </div>
         </div>
 
-        <div id="util-container" class="float-left h-16">
+        <div id="util-container" class="float-left h-16 space-y-12">
           <button
             class="px-4 py-3 w-full text-md bg-gray-900 text-white rounded-md flex justify-center"
             :hidden="!loggedIn"
@@ -246,6 +247,55 @@
             </svg>
             <span>Create a New Post</span>
           </button>
+          <div id="top-users" class="w-full flex flex-col p-8 shadow-custom rounded-md">
+            <span class="text-base font-medium mb-3">Top Users</span>
+            <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
+              <span>First Last</span>
+              <div class="flex">
+                <span class="mr-1">12</span>
+                <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
+              <span>First Last</span>
+              <div class="flex">
+                <span class="mr-1">12</span>
+                <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
+              <span>First Last</span>
+              <div class="flex">
+                <span class="mr-1">12</span>
+                <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
+              <span>First Last</span>
+              <div class="flex">
+                <span class="mr-1">12</span>
+                <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            <div class="hr my-3"></div>
+            <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
+              <span>You</span>
+              <div class="flex">
+                <span class="mr-1">12</span>
+                <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div id="post-modal" class="hidden flex fixed inset-0 z-10">
