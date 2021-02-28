@@ -20,22 +20,31 @@ const app = component({
   trendingPosts: [],
   posts: [
     {
-      user_name: 'Gamer Man',
-      user_id: 'asdasdasd',
-      title: 'owo',
-      body: 'owo',
-      hearts: 69,
+      user_name: 'Aiden Bai',
+      user_id: 'aidenbai',
+      title: '5.3 #16 for Edwards',
+      body: `I tried using addition, but there's this weird "-" sign. Anybody know what this means? Here is a picture of the work I have now:
+        ![](https://i.ytimg.com/vi/jGMRLLySc4w/maxresdefault.jpg)
+      `,
+      hearts: 3,
       id: 'example1',
       heartedByUser: localStorage.example1,
+      category: 'math',
     },
     {
-      user_name: 'Gamer Man 2',
-      user_id: 'asdasdasd',
-      title: 'owo',
-      body: 'owo',
-      hearts: 420,
+      user_name: 'Aiden Bai',
+      user_id: 'aidenbai',
+      title: 'Tips for Edwards',
+      body: `Edwards is a great teacher, but sometimes her grading can be really hard. I strongly recommend following these three tips:
+
+        - Be nice to her
+        - Show all your work
+        - Talk to her if you need help
+      `,
+      hearts: 100,
       id: 'example2',
       heartedByUser: localStorage.example2,
+      category: 'math',
     },
   ],
   userHearts: 0,
@@ -52,8 +61,8 @@ const app = component({
   },
   createPost({ title, body }) {
     const user = this.getUser();
-    if (!user) alert('You cannot use this method');
-    const [category] = (title + body).match(/math|science|english|foreign language|history/gim);
+    if (!user) return alert('You cannot use this method');
+    const category = ((title + body).match(/math|science|english|foreign language|history/gim) || [])[0];
 
     const payload = {
       user_name: user.user_metadata.full_name,
