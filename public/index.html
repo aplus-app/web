@@ -206,38 +206,55 @@
           l-mask
         >
           <div class="w-full flex p-8 shadow-custom rounded-md">
-            <div class="flex flex-col items-center pr-8">
-              <svg
-                id="unheart"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="{2}"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-              <svg
-                class="hidden"
-                id="heart"
-                width="24"
-                height="24"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                  clipRule="evenodd"
-                />
-              </svg>
+            <div
+              class="flex flex-col items-center pr-8"
+              @click="
+                this.post.heartedByUser = !this.post.heartedByUser;
+                if (this.post.heartedByUser) {
+                  this.post.hearts++;
+                  localStorage[this.post.id] = true;
+                } else {
+                  this.post.hearts--;
+                  delete localStorage[this.post.id]
+                }
+              "
+            >
+              <div :hidden="this.post.heartedByUser">
+                <svg
+                  id="unheart"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="{2}"
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+              </div>
+              <div :hidden="!this.post.heartedByUser">
+                <svg
+                  :hidden="!this.post.heartedByUser"
+                  id="heart"
+                  width="24"
+                  height="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+
               <span class="my-2 font-medium" l-text="this.post.hearts || 0">24</span>
             </div>
             <div id="card-content" class="flex-1">
@@ -253,7 +270,7 @@
               <div class="hr my-6"></div>
               <div id="card-meta" class="text-sm text-gray-400 flex justify-between">
                 <span class=""
-                  >Posted by <a l-text="this.post.name" class="text-purple-500"></a
+                  >Posted by <a l-text="this.post.user_name" class="text-purple-500"></a
                 ></span>
                 <span l-text="this.post.date || new Date().toLocaleDateString()"></span>
                 <div class="flex items-center">
@@ -272,6 +289,12 @@
                     />
                   </svg>
                   <span class="inline-block ml-2" l-text="this.post.comments?.length || 0"></span>
+
+                  <span
+                    class="inline-block ml-2"
+                    @click="alert('This post has been flagged for review.')"
+                    >INSERT FLAG ICON HERE</span
+                  >
                 </div>
               </div>
             </div>
@@ -302,11 +325,34 @@
             </svg>
             <span>Create a New Post</span>
           </button>
+          <button
+            class="px-4 py-3 w-full text-md bg-gray-900 text-white rounded-md flex justify-center"
+            :hidden="!loggedIn"
+            @click="alert('Coming soon!')"
+          >
+            <svg
+              class="mr-1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="{2}"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+            <span>Talk to a Counselor</span>
+          </button>
           <div id="top-users" class="w-full flex flex-col p-8 shadow-custom rounded-md">
             <span class="text-base font-medium mb-3">Top Users</span>
             <div l-for="post in topUsers">
               <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
-                <span l-text="this.post.name"></span>
+                <span l-text="this.post.user_name"></span>
                 <div class="flex">
                   <span class="mr-1" l-text="this.post.hearts || 0"></span>
                   <svg
