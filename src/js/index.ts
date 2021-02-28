@@ -16,18 +16,22 @@ const app = component({
   trendingPosts: [],
   posts: [
     {
-      name: 'Gamer Man',
-      id: 'asdasdasd',
+      user_name: 'Gamer Man',
+      user_id: 'asdasdasd',
       title: 'owo',
       body: 'owo',
       hearts: 69,
+      id: 'example1',
+      heartedByUser: localStorage.example1,
     },
     {
-      name: 'Gamer Man 2',
-      id: 'asdasdasd',
+      user_name: 'Gamer Man 2',
+      user_id: 'asdasdasd',
       title: 'owo',
       body: 'owo',
       hearts: 420,
+      id: 'example2',
+      heartedByUser: localStorage.example2,
     },
   ],
   userHearts: 0,
@@ -46,8 +50,8 @@ const app = component({
     const user = this.getUser();
     if (!user) alert('You cannot use this method');
     const payload = {
-      name: user.user_metadata.full_name,
-      id: user.id,
+      user_name: user.user_metadata.full_name,
+      user_id: user.id,
       title,
       body,
     };
@@ -210,12 +214,6 @@ document.querySelectorAll('#subject').forEach(function (el) {
 // }))
 
 init();
-
-try {
-  trending();
-} catch (err) {
-  console.error(err);
-}
 
 // identity.open(); // open the modal
 // identity.open('login'); // open the modal to the login tab
