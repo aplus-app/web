@@ -19,7 +19,7 @@ const index = {
     terser({ format: { comments: false } }),
     typescript({
       useTsconfigDeclarationDir: true,
-      tsconfigOverride: { compilerOptions: { target: 'es5' } },
+      tsconfigOverride: { compilerOptions: { target: 'es6' } },
     }),
   ],
 };
