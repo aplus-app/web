@@ -269,10 +269,10 @@
           <div l-for="post in posts" class="space-y-12" l-mask>
             <div
               class="w-full flex p-8 shadow-custom rounded-md cursor-pointer"
-              @click="openCard()"
+              @click="if (!(typeof $event.target.className === 'string' ? $event.target.className : 'post-skip').includes('post-skip')) { openCard() }"
             >
-              <div id="like-container"
-                class="flex flex-col items-center pr-8"
+              <div
+                class="flex flex-col items-center pr-8 post-skip"
                 @click="
                 this.post.heartedByUser = !this.post.heartedByUser;
                 if (this.post.heartedByUser) {
@@ -336,7 +336,7 @@
                   </svg>
                 </div>
 
-                <span class="my-2 font-medium" l-text="this.post.hearts || 0">24</span>
+                <span class="my-2 font-medium post-skip" l-text="this.post.hearts || 0">24</span>
               </div>
               <div id="card-content" class="flex-1">
                 <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
@@ -372,8 +372,7 @@
                     <span class="inline-block ml-2" l-text="this.post.comments?.length || 0"></span>
 
                     <svg
-                    id="report-button"
-                      class="ml-4 cursor-pointer"
+                      class="ml-4 cursor-pointer post-skip"
                       @click="openReport()"
                       width="20"
                       height="20"
@@ -668,7 +667,9 @@
             </div>
             <div id="comments" class="mt-8">
               <div id="make-comment">
-                <span class="text-gray-400 text-sm">Comment as <span class="text-purple-500">yourUsername</span></span>
+                <span class="text-gray-400 text-sm"
+                  >Comment as <span class="text-purple-500">yourUsername</span></span
+                >
                 <textarea
                   maxlength="2048"
                   class="mt-2 text-sm text-gray-500 border-2 border-gray-300 py-4 px-6 rounded-md w-full min-h-30 max-h-40"
@@ -676,14 +677,15 @@
                   placeholder="What are your thoughts?"
                 ></textarea>
                 <div class="flex flex-row-reverse">
-                  <button type="button"
-                  class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ml-3 sm:w-auto sm:text-sm"
-                >
-                  Post
-                </button>
+                  <button
+                    type="button"
+                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ml-3 sm:w-auto sm:text-sm"
+                  >
+                    Post
+                  </button>
                 </div>
               </div>
-            <!-- <div class="hr mt-6"></div> -->
+              <!-- <div class="hr mt-6"></div> -->
 
               <!-- <div class="uppercase py-3 tracking-wider text-gray-900 text-sm">Discussion</div> -->
               <div id="comment-block" class="w-full text-sm py-6">
