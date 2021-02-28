@@ -72,6 +72,10 @@ const app = component({
       document.querySelector('#report-modal-inner').classList.remove('hidden-custom');
       document.querySelector('#report-modal-bg').classList.remove('hidden-custom');
     }, 20);
+    // TODO: Add reporting
+  },
+  reportPost() {
+    alert('Post flagged for further review.');
   },
   closeReport() {
     document.querySelector('#report-modal-inner').classList.add('hidden-custom');
