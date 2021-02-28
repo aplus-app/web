@@ -52,7 +52,9 @@ const app = component({
       body,
     };
     closeModal();
-    this.posts.unshift(payload);
+    this.posts = [payload, ...this.posts];
+    this.latestPosts = [payload, ...this.latestPosts];
+    this.trendingPosts = [payload, ...this.trendingPosts];
   },
   __init() {
     this.loggedIn = !!this.getUser();
@@ -65,10 +67,9 @@ app.mount('#app');
 
 try {
   app.state.latestPosts = [...app.state.posts];
-
   app.state.trendingPosts = [...app.state.posts];
   app.state.trendingPosts.sort((post1, post2) => post2.hearts - post1.hearts);
-  app.state.topUsers = app.state.posts.slice(0, 3);
+  app.state.topUsers = app.state.trendingPosts.slice(0, 3);
 
   for (const post of [...app.state.trendingPosts]) {
     if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
