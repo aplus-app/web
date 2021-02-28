@@ -146,11 +146,15 @@ cancelPostBtn.addEventListener('click', () => closeModal());
 
 init();
 
-app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
-app.state.topUsers = app.state.posts.slice(0, 3);
+try {
+  app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
+  app.state.topUsers = app.state.posts.slice(0, 3);
 
-for (const post of [...app.state.posts]) {
-  if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
+  for (const post of [...app.state.posts]) {
+    if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
+  }
+} catch (err) {
+  console.error(err);
 }
 
 // identity.open(); // open the modal
