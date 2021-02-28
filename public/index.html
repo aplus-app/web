@@ -439,7 +439,7 @@
               <span>Create a New Post</span>
             </button>
             <button
-              class="px-4 py-3 w-full text-md bg-gray-900 hover:bg-gray-800 text-white rounded-md flex justify-center items-center"
+              class="px-4 py-3 w-full text-md bg-gray-900 hover:bg-gray-800 text-white rounded-md flex justify-center items-center post-skip"
               :hidden="!loggedIn"
               @click="alert('Coming soon!')"
             >
@@ -469,7 +469,6 @@
                 <div class="flex">
                   <span class="mr-1" l-text="this.post.hearts || 0"></span>
                   <svg
-                    class="post-skip"
                     width="20"
                     height="20"
                     xmlns="http://www.w3.org/2000/svg"
