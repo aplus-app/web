@@ -404,11 +404,7 @@
             class="px-12 py-3 text-md mb-4 bg-gray-900 mt-8 mx-auto text-white hover:bg-gray-800 rounded-md flex justify-center items-center"
             :hidden="!loggedIn"
             @click="
-              if (amountLoaded + 5 > POSTS.posts.length) {
-                posts = POSTS.posts.slice(0, POSTS.posts.length);
-              } else {
-                posts = POSTS.posts.slice(0, amountLoaded + 5);
-              }
+              posts.push(...POSTS.posts.slice(amountLoaded + 1, amountLoaded + 5));
             "
           >
             <svg
