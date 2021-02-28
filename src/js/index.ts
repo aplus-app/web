@@ -5,7 +5,7 @@ import identity from 'netlify-identity-widget';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 identity.init();
-const API_URL = 'https://will.tools';
+const API_URL = 'https://aplus-server.net';
 
 const app = component({
   API_URL,
@@ -25,9 +25,15 @@ const app = component({
       title: 'Happy Birthday to señorita Juanita',
       body: `Let's all wish señorita Juanita a happy birthday!! She's an phenomenal teacher. ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4d78da3e-748d-414a-9a12-54bee2e8d5a1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210228%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210228T041020Z&X-Amz-Expires=86400&X-Amz-Signature=c911bbc7ef25b508d1126c9a9d651f3517f2484423b534a4939b0cc1223eb604&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)`,
       hearts: 20,
-      id: 'example1',
+      id: 1,
       heartedByUser: localStorage.example1,
       category: 'foreign language',
+      comments: [
+        {
+          user_name: 'señorita Juanita',
+          body: 'Gracias chico!',
+        },
+      ],
     },
     {
       user_name: 'Aiden Bai',
@@ -37,9 +43,10 @@ const app = component({
         ![](https://i.ytimg.com/vi/jGMRLLySc4w/maxresdefault.jpg)
       `,
       hearts: 3,
-      id: 'example1',
+      id: 2,
       heartedByUser: localStorage.example1,
       category: 'math',
+      comments: [],
     },
     {
       user_name: 'Melinda Chang',
@@ -52,9 +59,10 @@ const app = component({
         - Talk to her if you need help
       `,
       hearts: 100,
-      id: 'example2',
+      id: 3,
       heartedByUser: localStorage.example2,
       category: 'history',
+      comments: [],
     },
     {
       user_name: 'Will Lane',
@@ -62,9 +70,10 @@ const app = component({
       title: "Newton's second law",
       body: `Yesterday I discovered that newton's second law is net Force = mass * acceleration! Ain't that neat.`,
       hearts: 5,
-      id: 'example3',
+      id: 4,
       heartedByUser: localStorage.example3,
       category: 'science',
+      comments: [],
     },
     {
       user_name: 'Tejas Agarwal',
@@ -72,13 +81,17 @@ const app = component({
       title: 'Survey form',
       body: `Hi! I'm part of the DECA club, wondering if anybody would be willing to fill it out if you are in Freshman English: [https://example.com](https://example.com).`,
       hearts: 10,
-      id: 'example4',
+      id: 5,
       heartedByUser: localStorage.example4,
       category: 'english',
+      comments: [],
     },
   ],
   userHearts: 0,
   topUsers: [],
+  i: 0,
+  currentCommentText: '',
+  comments: [],
   getUser(): boolean {
     return identity.currentUser();
   },
@@ -89,18 +102,24 @@ const app = component({
       identity.open();
     }
   },
+  createComment(data) {
+    this.posts[this.i].comments.push(data);
+    this.comments = [...this.posts[this.i].comments];
+    this.saveToLocal();
+  },
   createPost({ title, body }) {
     const user = this.getUser();
     if (!user) return alert('You cannot use this method');
-    const category = ((title + body).match(/math|science|english|foreign language|history/gim) ||
-      [])[0];
+    const category = ((title + body).match(/math|science|english|foreign language|history/gim) || [
+      'all',
+    ])[0];
 
     const payload = {
+      category: category,
       user_name: user.user_metadata.full_name,
       user_id: user.id,
-      title,
-      body,
-      category,
+      title: title,
+      body: body,
     };
     closeModal();
     this.originalPosts = [payload, ...this.originalPosts];
@@ -141,8 +160,11 @@ const app = component({
     document.querySelector('#report-modal-bg').classList.add('hidden-custom');
     setTimeout(() => document.querySelector('#report-modal').classList.add('hidden'), 100);
   },
-  openCard() {
+  openCard(i) {
     // if (e.target.closest('#like-container') || e.target.closest('#report-button')) return;
+    this.i = i;
+    this.comments = [...this.posts[this.i].comments];
+
     document.querySelector('#card-modal').classList.remove('hidden');
     setTimeout(() => {
       document.querySelector('#card-modal-inner').classList.remove('hidden-custom');

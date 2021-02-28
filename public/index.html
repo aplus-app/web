@@ -99,7 +99,7 @@
               <div
                 id="sort"
                 class="selected rounded-md my-1 py-2 px-2 flex items-center cursor-pointer"
-                @click="posts = [...trendingPosts]"
+                @click="const p = [...posts].sort((post1, post2) => post2.hearts - post1.hearts); posts = p"
               >
                 <svg
                   class="mr-1"
@@ -120,7 +120,7 @@
               <div
                 id="sort"
                 class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-                @click="posts = [...latestPosts]"
+                @click="posts = originalPosts.filter(({ id }) => posts.some((post) => id === post.id))"
               >
                 <svg
                   width="20"
@@ -266,10 +266,10 @@
         </div>
 
         <div id="feed-container" class="align-top float-left h-16 space-y-12">
-          <div l-for="post in posts" class="space-y-12" l-mask>
+          <div l-for="(post, i) in posts" class="space-y-12" l-mask>
             <div
               class="w-full flex p-8 shadow-custom rounded-md cursor-pointer"
-              @click="if (!(typeof $event.target.className === 'string' ? $event.target.className : 'post-skip').includes('post-skip')) { openCard() }"
+              @click="if (!(typeof $event.target.className === 'string' ? $event.target.className : 'post-skip').includes('post-skip')) { openCard(this.i) }"
             >
               <div
                 class="flex flex-col items-center pr-8 post-skip"
@@ -286,6 +286,7 @@
                     referrerPolicy: 'no-referrer',
                     // mode: 'cors'
                   });
+                  saveToLocal();
                 } else {
                   this.post.hearts--;
                   delete localStorage[this.post.id];
@@ -297,6 +298,7 @@
                     referrerPolicy: 'no-referrer',
                     // mode: 'cors'
                   });
+                  saveToLocal();
                 }
               "
               >
@@ -336,7 +338,7 @@
                   </svg>
                 </div>
 
-                <span class="my-2 font-medium post-skip" l-text="this.post.hearts || 0">24</span>
+                <span class="my-2 font-medium post-skip" l-text="this.post.hearts || 0"></span>
               </div>
               <div id="card-content" class="flex-1">
                 <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
@@ -638,14 +640,15 @@
             class="hidden-custom inline-block mt-16 bg-white p-16 rounded-lg text-left w-4xl shadow-xl"
           >
             <div>
-              <h1 class="text-3xl font-bold">Post title</h1>
+              <h1 class="text-3xl font-bold" l-text="posts[i].title">Post title</h1>
               <div class="my-3">
                 <span class="text-gray-500"
-                  >Posted by <span class="text-purple-500">Username</span> at
-                  <span>timestamp</span></span
+                  >Posted by
+                  <span class="text-purple-500" l-text="posts[i].user_name">Username</span> at
+                  <span l-text="new Date().toLocaleDateString()">timestamp</span></span
                 >
               </div>
-              <p class="text-gray-700">
+              <p class="text-gray-700" l-html="DOMPurify.sanitize(marked(posts[i].body || ''))">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum earum, fugiat
                 iusto, debitis fuga vero maxime sequi ducimus aspernatur facere nemo optio neque
                 quam perspiciatis nihil porro nisi? Commodi ab, laudantium praesentium recusandae at
@@ -668,16 +671,19 @@
             <div id="comments" class="mt-8">
               <div id="make-comment">
                 <span class="text-gray-400 text-sm"
-                  >Comment as <span class="text-purple-500">yourUsername</span></span
+                  >Comment as
+                  <span class="text-purple-500" l-text="getUser().user_metadata.full_name">yourUsername</span></span
                 >
                 <textarea
                   maxlength="2048"
                   class="mt-2 text-sm text-gray-500 border-2 border-gray-300 py-4 px-6 rounded-md w-full min-h-30 max-h-40"
                   type="text"
+                  l-model="currentCommentText"
                   placeholder="What are your thoughts?"
                 ></textarea>
                 <div class="flex flex-row-reverse">
                   <button
+                    @click="if (currentCommentText.length > 0) { createComment({ user_name: getUser().user_metadata.full_name, body: currentCommentText }); currentCommentText = '' } else { alert('Please provide content for comment') }"
                     type="button"
                     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ml-3 sm:w-auto sm:text-sm"
                   >
@@ -688,32 +694,24 @@
               <!-- <div class="hr mt-6"></div> -->
 
               <!-- <div class="uppercase py-3 tracking-wider text-gray-900 text-sm">Discussion</div> -->
-              <div id="comment-block" class="w-full text-sm py-6">
-                <span class="text-gray-500"
-                  ><span class="text-purple-500">Username</span> 5 hours ago</span
-                >
-                <div class="mt-2">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus a delectus
-                    veritatis cupiditate vitae pariatur, perspiciatis consectetur accusamus
-                    praesentium. Necessitatibus?
-                  </p>
+              <div l-for="comment of comments">
+                <div>
+                  <div id="comment-block" class="w-full text-sm py-6">
+                    <span class="text-gray-500"
+                      ><span class="text-purple-500" l-text="this.comment.user_name">Username</span>
+                      <span l-text="new Date().toLocaleDateString()"></span
+                    ></span>
+                    <div class="mt-2">
+                      <p l-html="DOMPurify.sanitize(marked(this.comment.body || ''))">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus a
+                        delectus veritatis cupiditate vitae pariatur, perspiciatis consectetur
+                        accusamus praesentium. Necessitatibus?
+                      </p>
+                    </div>
+                  </div>
+                  <div class="hr"></div>
                 </div>
               </div>
-              <div class="hr"></div>
-              <div id="comment-block" class="w-full text-sm py-6">
-                <span class="text-gray-500"
-                  ><span class="text-purple-500">Username</span> 5 hours ago</span
-                >
-                <div class="mt-2">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus a delectus
-                    veritatis cupiditate vitae pariatur, perspiciatis consectetur accusamus
-                    praesentium. Necessitatibus?
-                  </p>
-                </div>
-              </div>
-              <div class="hr"></div>
             </div>
           </div>
         </div>
