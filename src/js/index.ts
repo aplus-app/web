@@ -27,7 +27,7 @@ const app = component({
       hearts: 20,
       id: 'example1',
       heartedByUser: localStorage.example1,
-      category: 'math',
+      category: 'foreign language',
     },
     {
       user_name: 'Aiden Bai',
