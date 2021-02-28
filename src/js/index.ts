@@ -141,7 +141,8 @@ const app = component({
     document.querySelector('#report-modal-bg').classList.add('hidden-custom');
     setTimeout(() => document.querySelector('#report-modal').classList.add('hidden'), 100);
   },
-  openCard() {
+  openCard(e) {
+    // if (e.target.closest('#like-container') || e.target.closest('#report-button')) return;
     document.querySelector('#card-modal').classList.remove('hidden');
     setTimeout(() => {
       document.querySelector('#card-modal-inner').classList.remove('hidden-custom');
