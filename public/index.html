@@ -74,7 +74,6 @@
                 class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-gray-900 ring-opacity-5 hidden hidden-custom"
                 id="user-menu"
               >
-                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
                 <a
                   id="sign-out"
                   @click="identifyAction"
@@ -237,25 +236,30 @@
                 id="subject"
                 class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
               >
-              <svg class="mr-1" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-              </svg>
+                <svg
+                  class="mr-1"
+                  width="20"
+                  height="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"
+                  />
+                </svg>
                 <span>History</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div
-          id="feed-container"
-          l-for="post in posts"
-          class="align-top float-left h-16 space-y-12"
-          l-mask
-        >
-          <div class="w-full flex p-8 shadow-custom rounded-md">
-            <div
-              class="flex flex-col items-center pr-8"
-              @click="
+        <div id="feed-container" class="align-top float-left h-16 space-y-12" l-mask>
+          <div l-for="post in posts">
+            <div class="w-full flex p-8 shadow-custom rounded-md">
+              <div
+                class="flex flex-col items-center pr-8"
+                @click="
                 this.post.heartedByUser = !this.post.heartedByUser;
                 if (this.post.heartedByUser) {
                   this.post.hearts++;
@@ -265,87 +269,110 @@
                   delete localStorage[this.post.id]
                 }
               "
-            >
-              <div :hidden="this.post.heartedByUser">
-                <svg
-                  id="unheart"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="{2}"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-              </div>
-              <div :hidden="!this.post.heartedByUser">
-                <svg
-                  :hidden="!this.post.heartedByUser"
-                  id="heart"
-                  width="24"
-                  height="24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-
-              <span class="my-2 font-medium" l-text="this.post.hearts || 0">24</span>
-            </div>
-            <div id="card-content" class="flex-1">
-              <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
-              <div class="mt-2 text-gray-500 text-base leading-8">
-                <p l-html="DOMPurify.sanitize(marked(this.post.body))">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ad cumque sequi
-                  molestiae hic saepe cupiditate, ab soluta blanditiis autem earum voluptas dolore
-                  aliquam enim accusantium illo expedita eius vel dolores! Saepe voluptatem autem
-                  laborum ut facilis quia unde dolor.
-                </p>
-              </div>
-              <div class="hr my-6"></div>
-              <div id="card-meta" class="text-sm text-gray-400 flex justify-between">
-                <span class=""
-                  >Posted by <a l-text="this.post.user_name" class="text-purple-500"></a
-                ></span>
-                <span l-text="this.post.date || new Date().toLocaleDateString()"></span>
-                <div class="flex items-center">
+              >
+                <div :hidden="this.post.heartedByUser">
                   <svg
-                    width="20"
-                    height="20"
+                    id="unheart"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="{2}"
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                  </svg>
+                </div>
+                <div :hidden="!this.post.heartedByUser">
+                  <svg
+                    :hidden="!this.post.heartedByUser"
+                    id="heart"
+                    width="24"
+                    height="24"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
                     <path
-                      d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"
-                    />
-                    <path
-                      d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"
+                      fillRule="evenodd"
+                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                      clipRule="evenodd"
                     />
                   </svg>
-                  <span class="inline-block ml-2" l-text="this.post.comments?.length || 0"></span>
+                </div>
 
-                  <span
-                    class="inline-block ml-2"
-                    @click="alert('This post has been flagged for review.')"
-                    >INSERT FLAG ICON HERE</span
-                  >
+                <span class="my-2 font-medium" l-text="this.post.hearts || 0">24</span>
+              </div>
+              <div id="card-content" class="flex-1">
+                <h1 class="m-0 font-bold text-2xl text-gray-900" l-text="this.post.title"></h1>
+                <div class="mt-2 text-gray-500 text-base leading-8">
+                  <p l-html="DOMPurify.sanitize(marked(this.post.body))">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ad cumque sequi
+                    molestiae hic saepe cupiditate, ab soluta blanditiis autem earum voluptas dolore
+                    aliquam enim accusantium illo expedita eius vel dolores! Saepe voluptatem autem
+                    laborum ut facilis quia unde dolor.
+                  </p>
+                </div>
+                <div class="hr my-6"></div>
+                <div id="card-meta" class="text-sm text-gray-400 flex justify-between">
+                  <span class=""
+                    >Posted by <a l-text="this.post.user_name" class="text-purple-500"></a
+                  ></span>
+                  <span l-text="this.post.date || new Date().toLocaleDateString()"></span>
+                  <div class="flex items-center">
+                    <svg
+                      width="20"
+                      height="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"
+                      />
+                      <path
+                        d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"
+                      />
+                    </svg>
+                    <span class="inline-block ml-2" l-text="this.post.comments?.length || 0"></span>
+
+                    <span
+                      class="inline-block ml-2"
+                      @click="alert('This post has been flagged for review.')"
+                      >INSERT FLAG ICON HERE</span
+                    >
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <button
+            class="px-4 py-3 w-full text-md bg-gray-900 text-white rounded-md flex justify-center"
+            :hidden="!loggedIn"
+          >
+            <svg
+              class="mr-1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="{2}"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+            <span>Load More</span>
+          </button>
         </div>
 
         <div id="util-container" class="float-left h-16 space-y-12">
