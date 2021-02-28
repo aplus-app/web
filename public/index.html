@@ -278,11 +278,25 @@
                 if (this.post.heartedByUser) {
                   this.post.hearts++;
                   localStorage[this.post.id] = true;
-                  fetch(`${API_URL}/add-heart`, { method: 'POST', body: { id: this.post.id } });
+                  fetch(`${API_URL}/add-heart`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: this.post.id }),
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    // mode: 'cors'
+                  });
                 } else {
                   this.post.hearts--;
                   delete localStorage[this.post.id];
-                  fetch(`${API_URL}/remove-heart`, { method: 'POST', body: { id: this.post.id } });
+                  fetch(`${API_URL}/remove-heart`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: this.post.id }),
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    // mode: 'cors'
+                  });
                 }
               "
               >
@@ -448,7 +462,7 @@
             </button>
           </div>
           <div id="top-users" class="w-full mt-8 flex flex-col p-8 shadow-custom rounded-md">
-            <span class="text-base font-medium mb-3">Top Users</span>
+            <span class="text-base font-medium mb-3">Top Posts</span>
             <div l-for="post in topUsers">
               <div class="flex justify-between text-gray-400 font-normal text-sm my-1 py-2">
                 <span l-text="this.post.user_name"></span>
