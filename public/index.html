@@ -99,7 +99,7 @@
               <div
                 id="sort"
                 class="selected rounded-md my-1 py-2 px-2 flex items-center cursor-pointer"
-                @click="const p = [...posts].sort((post1, post2) => post2.hearts - post1.hearts); posts = p"
+                @click="const p = [...posts].sort((post1, post2) => post2.hearts - post1.hearts); posts = p; mode = 'trending'"
               >
                 <svg
                   class="mr-1"
@@ -120,7 +120,7 @@
               <div
                 id="sort"
                 class="rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
-                @click="posts = originalPosts.filter(({ id }) => posts.some((post) => id === post.id))"
+                @click="posts = originalPosts.filter(({ id }) => posts.some((post) => id === post.id)); mode = 'latest'"
               >
                 <svg
                   width="20"
@@ -143,7 +143,13 @@
               <div class="uppercase py-3 tracking-wider">Subjects</div>
               <div
                 id="subject"
-                @click="posts = [...originalPosts]"
+                @click="
+                  if (mode === 'trending') {
+                    posts = [...originalPosts].sort((post1, post2) => post2.hearts - post1.hearts);
+                  } else {
+                    posts = [...originalPosts];
+                  }
+                "
                 class="selected rounded-md my-1 py-2 px-2 text-sm flex items-center hover:bg-gray-100 cursor-pointer"
               >
                 <svg
@@ -277,8 +283,6 @@
                 this.post.heartedByUser = !this.post.heartedByUser;
                 if (this.post.heartedByUser) {
                   this.post.hearts++;
-                  localStorage[`post${this.post.id}`] = true;
-                  $render();
                   fetch(`${API_URL}/add-heart`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -287,11 +291,8 @@
                     referrerPolicy: 'no-referrer',
                     // mode: 'cors'
                   });
-                  saveToLocal();
                 } else {
                   this.post.hearts--;
-                  delete localStorage[`post${this.post.id}`];
-                  $render();
                   fetch(`${API_URL}/remove-heart`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -300,11 +301,10 @@
                     referrerPolicy: 'no-referrer',
                     // mode: 'cors'
                   });
-                  saveToLocal();
                 }
               "
               >
-                <div :hidden="localStorage[`post${this.post.id}`]">
+                <div :hidden="this.post.heartedByUser">
                   <svg
                     id="unheart"
                     xmlns="http://www.w3.org/2000/svg"
@@ -322,9 +322,8 @@
                     />
                   </svg>
                 </div>
-                <div :hidden="!localStorage[`post${this.post.id}`]">
+                <div :hidden="!this.post.heartedByUser">
                   <svg
-                    :hidden="!this.post.heartedByUser"
                     id="heart"
                     width="24"
                     height="24"
@@ -347,7 +346,7 @@
                 <div class="my-4">
                   <span
                     class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white self-start"
-                    >Subject</span
+                    l-text="this.post.category"></span
                   >
                 </div>
                 <div class="text-gray-500 text-base leading-8">
@@ -404,6 +403,13 @@
           <button
             class="px-12 py-3 text-md mb-4 bg-gray-900 mt-8 mx-auto text-white hover:bg-gray-800 rounded-md flex justify-center items-center"
             :hidden="!loggedIn"
+            @click="
+              if (amountLoaded + 5 > POSTS.posts.length) {
+                posts = POSTS.posts.slice(0, POSTS.posts.length);
+              } else {
+                posts = POSTS.posts.slice(0, amountLoaded + 5);
+              }
+            "
           >
             <svg
               class="mr-1"
@@ -534,6 +540,7 @@
                   <!-- <label class="block text-sm font-medium text-gray-700">Subject</label> -->
                   <select
                     class="text-sm text-gray-500 border-2 border-gray-300 py-2 px-3 rounded-md w-1/3"
+                    l-model="select"
                   >
                     <option disabled selected>Choose a subject</option>
                     <option>Math</option>
@@ -558,7 +565,7 @@
                     id="post-textbox"
                     class="text-sm text-gray-500 shadow-inner border-2 border-gray-300 py-2 px-3 rounded-md w-full max-h-40"
                     type="text"
-                    placeholder="Text"
+                    placeholder="Text (You can write markdown here)"
                   ></textarea>
                 </div>
                 <div class="mt-2" :hidden="!currentPostBody">
@@ -665,7 +672,7 @@
               <button
                 :style="{ display: getUser().user_metadata.full_name !== posts[i].user_name ? 'none' : 'block' }"
                 @click="
-                  fetch(`${API_URL}/delete-comment`, {
+                  fetch(`${API_URL}/delete-post`, {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
@@ -673,7 +680,7 @@
                     redirect: 'follow',
                     referrerPolicy: 'no-referrer',
                     body: JSON.stringify({
-                      id: +this.posts[this.i].id,
+                      id: +posts[i].id,
                     }),
                   }).then((res) => res.text()).then(() => {
                     location.reload(false);
@@ -685,13 +692,13 @@
                 Delete
               </button>
 
-              <!-- <h1 class="text-3xl font-bold">Post title</h1>
-              <div class="my-4">
+              <!-- <h1 class="text-3xl font-bold">Post title</h1> -->
+               <div class="my-4">
                 <span
-                  class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white"
-                  >Subject</span
+                  class="uppercase text-sm rounded-md px-2 py-2 tracking-wider bg-purple-600 text-white" l-text="posts[i].category"
+                  ></span
                 >
-              </div> -->
+              </div>
 
               <div class="my-3">
                 <span class="text-gray-500"

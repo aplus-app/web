@@ -11,6 +11,7 @@ fetch(`${API_URL}/get/posts`)
   .then((res) => res.json())
   .then((POSTS) => {
     const app = component({
+      POSTS,
       API_URL,
       DOMPurify,
       marked,
@@ -21,12 +22,78 @@ fetch(`${API_URL}/get/posts`)
       originalPosts: [],
       latestPosts: [],
       trendingPosts: [],
-      posts: POSTS.posts,
+      mode: 'trending',
+      amountLoaded: 5,
+      posts: [
+        ...POSTS.posts.slice(0, 5),
+        {
+          user_name: 'Aiden Bai',
+          user_id: 'aidenbai',
+          title: 'Happy Birthday to señorita Juanita',
+          body: `Let's all wish señorita Juanita a happy birthday!! She's an phenomenal teacher. ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4d78da3e-748d-414a-9a12-54bee2e8d5a1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210228%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210228T041020Z&X-Amz-Expires=86400&X-Amz-Signature=c911bbc7ef25b508d1126c9a9d651f3517f2484423b534a4939b0cc1223eb604&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)`,
+          hearts: 20,
+          id: 1,
+          heartedByUser: localStorage.example1,
+          category: 'foreign language',
+          comments: []
+        },
+        {
+          user_name: 'Aiden Bai',
+          user_id: 'aidenbai',
+          title: '5.3 #16 for Edwards',
+          body: `I tried using addition, but there's this weird "-" sign. Anybody know what this means? Here is a picture of the work I have now:
+            ![](https://i.ytimg.com/vi/jGMRLLySc4w/maxresdefault.jpg)
+          `,
+          hearts: 3,
+          id: 2,
+          heartedByUser: localStorage.example1,
+          category: 'math',
+          comments: []
+        },
+        {
+          user_name: 'Melinda Chang',
+          user_id: 'melindachang',
+          title: 'Tips for Abraham',
+          body: `Edwards is a great teacher, but sometimes her grading can be really hard. I strongly recommend following these three tips:
+            - Be nice to her
+            - Show all your work
+            - Talk to her if you need help
+          `,
+          hearts: 100,
+          id: 3,
+          heartedByUser: localStorage.example2,
+          category: 'history',
+          comments: []
+        },
+        {
+          user_name: 'Will Lane',
+          user_id: 'willlane',
+          title: "Newton's second law",
+          body: `Yesterday I discovered that newton's second law is net Force = mass * acceleration! Ain't that neat.`,
+          hearts: 5,
+          id: 4,
+          heartedByUser: localStorage.example3,
+          category: 'science',
+          comments: []
+        },
+        {
+          user_name: 'Tejas Agarwal',
+          user_id: 'tejasagarwal',
+          title: 'Survey form',
+          body: `Hi! I'm part of the DECA club, wondering if anybody would be willing to fill it out if you are in Freshman English: [https://example.com](https://example.com).`,
+          hearts: 10,
+          id: 5,
+          heartedByUser: localStorage.example4,
+          category: 'english',
+          comments: []
+        },
+      ],
       userHearts: 0,
       topUsers: [],
       i: 0,
       currentCommentText: '',
       comments: [],
+      select: '',
       getUser(): boolean {
         return identity.currentUser();
       },
@@ -54,13 +121,11 @@ fetch(`${API_URL}/get/posts`)
             user_name: this.getUser().user_metadata.full_name,
           }),
         });
-
-        this.saveToLocal();
       },
       createPost({ title, body }) {
         const user = this.getUser();
         if (!user) return alert('You cannot use this method');
-        const category = ((title + body).match(
+        const category = ((this.select + title + body).match(
           /math|science|english|foreign language|history/gim
         ) || ['all'])[0];
 
@@ -77,7 +142,6 @@ fetch(`${API_URL}/get/posts`)
         this.latestPosts = [payload, ...this.latestPosts];
         this.trendingPosts = [payload, ...this.trendingPosts];
 
-        this.saveToLocal();
         fetch(`${API_URL}/create-post`, {
           method: 'POST',
           headers: {
@@ -133,6 +197,7 @@ fetch(`${API_URL}/get/posts`)
     app.mount('#app');
 
     try {
+      app.state.originalPosts = [...app.state.posts];
       app.state.latestPosts = [...app.state.posts];
       app.state.trendingPosts = [...app.state.posts];
       app.state.trendingPosts.sort((post1, post2) => post2.hearts - post1.hearts);
@@ -143,7 +208,6 @@ fetch(`${API_URL}/get/posts`)
       }
 
       app.state.posts = app.state.trendingPosts;
-      app.state.originalPosts = [...app.state.posts];
     } catch (err) {
       console.error(err);
     }
