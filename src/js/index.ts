@@ -64,7 +64,9 @@ app.state.__init();
 app.state.posts.sort((post1, post2) => post2.hearts - post1.hearts);
 app.state.topUsers = app.state.posts.slice(0, 3);
 
-app.state.userHearts = app.state.filter((post) => post.id === app.state.getUser().id);
+for (const post of [...app.state.posts]) {
+  if (post.id === app.state.getUser().id) app.state.userHearts += post.hearts;
+}
 
 identity.on('login', (user) => {
   app.state.loggedIn = true;
